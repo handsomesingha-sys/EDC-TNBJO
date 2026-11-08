@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="EDC Payment System - ระบบรับชำระเงินและจัดการธุรกรรม">
+  <title>EDC Payment System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <style>
+    :root{--primary:#0f766e;--primary-dark:#115e59;--primary-soft:#e6f4f1;--success:#15803d;--success-soft:#eaf7ee;--warning:#b45309;--warning-soft:#fff7e8;--danger:#b91c1c;--danger-soft:#fff0f0;--info:#1d4ed8;--info-soft:#eff5ff;--ink:#172b3a;--muted:#687987;--line:#e5ebef;--surface:#fff;--canvas:#f4f7f8;--sidebar:#102c3a;--sidebar-muted:#b5c5ce;--radius:15px;--shadow:0 8px 28px rgba(20,45,60,.07)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--canvas);color:var(--ink);font-family:'Anuphan',sans-serif;font-size:14px;line-height:1.55}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}a{color:var(--primary);text-decoration:none}img{max-width:100%}.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.01em}.text-right{text-align:right}.text-center{text-align:center}.nowrap{white-space:nowrap}.w-full{width:100%}
+    .login-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 0%,#dff1ec 0,#f4f7f8 48%,#f4f7f8 100%)}.login-card{width:min(100%,410px);background:#fff;border:1px solid rgba(220,231,235,.9);border-radius:22px;padding:36px;box-shadow:0 24px 70px rgba(18,54,68,.12)}.brand-mark{width:62px;height:62px;display:grid;place-items:center;border-radius:18px;color:#fff;background:linear-gradient(145deg,#0f766e,#0b5c57);font-size:25px;margin:0 auto 16px;box-shadow:0 10px 24px rgba(15,118,110,.2)}.login-title{text-align:center;font-size:24px;font-weight:700;margin:0;letter-spacing:.02em}.login-subtitle{text-align:center;color:var(--muted);margin:5px 0 28px}.login-footer{text-align:center;color:#9aa8b1;font-size:11px;margin-top:24px;letter-spacing:.08em}.login-config{display:block;width:100%;border:0;background:transparent;color:var(--muted);margin-top:14px;font-size:12px}
+    .app-shell{min-height:100vh;display:none}.sidebar{position:fixed;z-index:30;inset:0 auto 0 0;width:252px;background:var(--sidebar);color:#fff;display:flex;flex-direction:column;padding:22px 14px 16px;overflow-y:auto}.sidebar-brand{display:flex;align-items:center;gap:11px;padding:0 10px 24px;border-bottom:1px solid rgba(255,255,255,.1)}.sidebar-brand .brand-icon{width:42px;height:42px;display:grid;place-items:center;background:#0f766e;border-radius:13px;font-size:19px}.sidebar-brand strong{display:block;font-size:14px;letter-spacing:.04em}.sidebar-brand span{display:block;font-size:10px;color:var(--sidebar-muted);margin-top:2px}.nav-section{color:#8298a5;padding:22px 12px 8px;font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}.nav-list{display:grid;gap:4px}.nav-item{width:100%;display:flex;align-items:center;gap:12px;border:0;background:transparent;color:var(--sidebar-muted);border-radius:10px;padding:11px 13px;text-align:left;font-size:13px;transition:.18s ease}.nav-item i{width:18px;text-align:center;font-size:14px}.nav-item:hover{color:#fff;background:rgba(255,255,255,.08)}.nav-item.active{color:#fff;background:#0f766e;box-shadow:0 6px 16px rgba(0,0,0,.12)}.sidebar-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);padding:14px 8px 0}.sidebar-user{display:flex;align-items:center;gap:10px;padding:8px}.avatar{width:36px;height:36px;display:grid;place-items:center;background:#d9efea;color:var(--primary-dark);border-radius:50%;font-weight:700;flex:0 0 auto}.sidebar-user strong{display:block;font-size:12px;color:#fff;max-width:145px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sidebar-user span{display:block;font-size:10px;color:var(--sidebar-muted)}.main-area{margin-left:252px;min-height:100vh}.topbar{position:sticky;top:0;z-index:20;height:70px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px}.topbar-title{font-size:17px;font-weight:700;margin:0}.topbar-subtitle{color:var(--muted);font-size:11px;margin-top:1px}.topbar-actions{display:flex;align-items:center;gap:9px}.icon-button{position:relative;width:38px;height:38px;border:1px solid var(--line);background:#fff;color:#506472;border-radius:11px;display:grid;place-items:center}.icon-button:hover{color:var(--primary);border-color:#b9d9d3;background:#f6fbfa}.notification-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;background:#dc2626;border:1px solid #fff;border-radius:50%}.content{max-width:1500px;padding:28px 30px 44px;margin:0 auto}.mobile-nav{display:none}
+    .page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}.page-heading h2{margin:0;font-size:22px;font-weight:700}.page-heading p{margin:4px 0 0;color:var(--muted);font-size:12px}.heading-actions{display:flex;flex-wrap:wrap;gap:8px}.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 2px 7px rgba(20,45,60,.025)}.card-pad{padding:20px}.card-title{margin:0;font-size:14px;font-weight:700}.card-description{margin:4px 0 0;font-size:11px;color:var(--muted)}.grid{display:grid;gap:16px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}.stat-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;align-items:flex-start;gap:13px;min-width:0}.stat-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;font-size:16px}.stat-icon.teal{background:var(--primary-soft);color:var(--primary)}.stat-icon.green{background:var(--success-soft);color:var(--success)}.stat-icon.amber{background:var(--warning-soft);color:var(--warning)}.stat-icon.blue{background:var(--info-soft);color:var(--info)}.stat-label{font-size:11px;color:var(--muted)}.stat-value{font-size:22px;font-weight:700;line-height:1.35;margin-top:3px;overflow-wrap:anywhere}.stat-note{color:#91a0aa;font-size:10px;margin-top:2px}
+    .btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;border:1px solid transparent;border-radius:10px;padding:9px 14px;font-weight:600;font-size:12px;transition:.16s ease;white-space:nowrap}.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-dark)}.btn-success{background:#15803d;color:#fff}.btn-success:hover{background:#166534}.btn-danger{background:#b91c1c;color:#fff}.btn-danger:hover{background:#991b1b}.btn-outline{color:#435968;background:#fff;border-color:#dbe4e8}.btn-outline:hover{background:#f7fafb;border-color:#b9cbd2}.btn-soft{color:var(--primary);background:var(--primary-soft)}.btn-soft:hover{background:#d5ebe6}.btn-ghost{border:0;color:var(--muted);background:transparent;padding:8px}.btn-sm{padding:6px 9px;font-size:11px;border-radius:8px}.btn-block{width:100%}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}.field label{color:#455b69;font-weight:600;font-size:11px}.input,.select,.textarea{width:100%;min-width:0;border:1px solid #dce5e9;border-radius:9px;background:#fff;color:var(--ink);padding:10px 12px;outline:none;font-size:12px;transition:border .15s,box-shadow .15s}.input:focus,.select:focus,.textarea:focus{border-color:#69a99f;box-shadow:0 0 0 3px rgba(15,118,110,.09)}.input::placeholder,.textarea::placeholder{color:#a4b0b8}.textarea{resize:vertical;min-height:82px}.field-hint{color:#8b9aa4;font-size:10px}.filters{display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:15px;margin-bottom:14px}.filters .field{min-width:145px;flex:1}.filters .field.search-field{flex:2;min-width:200px}.table-wrap{width:100%;overflow:auto}table{width:100%;border-collapse:collapse;min-width:650px}th{background:#f8fafb;color:#617481;font-size:10px;font-weight:700;text-align:left;white-space:nowrap;padding:12px 14px;border-bottom:1px solid var(--line)}td{font-size:11px;color:#344b59;padding:12px 14px;border-bottom:1px solid #edf1f3;vertical-align:middle}tr:last-child td{border-bottom:0}tbody tr:hover{background:#fbfdfd}.table-empty{padding:34px!important;text-align:center;color:#8b9aa4}.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:30px;font-size:10px;font-weight:600;white-space:nowrap}.badge-success{color:#166534;background:#e9f7ed}.badge-warning{color:#92400e;background:#fff4df}.badge-danger{color:#991b1b;background:#feecec}.badge-info{color:#1e40af;background:#edf3ff}.badge-muted{color:#586a76;background:#eef2f4}.row{display:flex;align-items:center;gap:10px}.row-between{display:flex;align-items:center;justify-content:space-between;gap:12px}.stack{display:grid;gap:14px}.divider{height:1px;background:var(--line);margin:15px 0}.empty-state{text-align:center;padding:42px 20px;color:var(--muted)}.empty-state i{font-size:28px;color:#a7b5bd;margin-bottom:10px}.empty-state strong{display:block;color:#526875;font-size:13px}.chart-bars{display:flex;align-items:end;gap:8px;height:180px;padding:18px 6px 0;border-bottom:1px solid var(--line)}.chart-col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px;min-width:0}.chart-bar{width:min(100%,35px);min-height:3px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#28a49a,#0f766e)}.chart-label{font-size:9px;color:#81909a;white-space:nowrap}.chart-value{font-size:9px;color:#556b78;white-space:nowrap}
+    .payment-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px;align-items:start}.terminal-card{background:linear-gradient(145deg,#172f3d,#0d202b);color:#fff;border-radius:20px;padding:22px;box-shadow:0 14px 36px rgba(10,35,48,.15)}.terminal-top{display:flex;align-items:center;justify-content:space-between;color:#b4c5cd;font-size:11px}.terminal-display{margin:22px 0 16px;background:#f8fbfa;color:#142e3a;border-radius:12px;padding:18px 16px 15px;text-align:right}.terminal-display-label{color:#71858f;font-size:10px;text-align:left}.terminal-amount{font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.25;word-break:break-all}.terminal-currency{color:#73848d;font-size:11px}.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.key{min-height:58px;border:1px solid rgba(255,255,255,.12);border-radius:11px;color:#fff;background:rgba(255,255,255,.08);font-size:20px;font-weight:600;transition:.12s ease}.key:hover{background:rgba(255,255,255,.16)}.key.utility{color:#d2e4e7;background:rgba(255,255,255,.04);font-size:15px}.key.enter{background:#159b68;border-color:#159b68;font-size:15px}.key.enter:hover{background:#128458}.popular-amounts{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.amount-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:30px;color:#dce8eb;padding:6px 10px;font-size:10px}.terminal-note{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.13);color:#fff}.terminal-note::placeholder{color:#9db0b8}.payment-side-card{padding:20px}.payment-feature{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.payment-feature:last-child{border-bottom:0}.payment-feature-icon{color:var(--primary);width:22px;text-align:center;padding-top:2px}.payment-feature strong{font-size:12px;display:block}.payment-feature span{color:var(--muted);font-size:10px;display:block;margin-top:2px}.qr-panel{max-width:520px;margin:0 auto}.qr-box{width:min(100%,265px);min-height:265px;display:grid;place-items:center;padding:12px;border-radius:14px;border:1px solid var(--line);background:#fff;margin:15px auto}.qr-box img{max-height:240px;object-fit:contain}.qr-box canvas{max-width:100%}.countdown{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}.camera-action{border:1px dashed #86b8b0;color:var(--primary-dark);background:#f0faf7;border-radius:13px;padding:17px;width:100%}.camera-action i{font-size:23px;display:block;margin-bottom:7px}.camera-action strong{display:block;font-size:13px}.camera-action span{display:block;font-size:10px;margin-top:3px;color:#6c8587}.success-screen{text-align:center;padding:28px 20px}.success-mark{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;margin:0 auto 14px;color:#168148;background:#e6f7ec;font-size:32px}
+    .modal-backdrop{position:fixed;z-index:100;inset:0;background:rgba(9,27,38,.48);display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(3px)}.modal-backdrop.show{display:flex}.modal{width:min(100%,570px);max-height:min(88vh,850px);overflow:auto;background:#fff;border:1px solid rgba(255,255,255,.6);border-radius:18px;box-shadow:0 28px 90px rgba(0,0,0,.22);animation:modalIn .18s ease-out}.modal.wide{width:min(100%,850px)}@keyframes modalIn{from{opacity:0;transform:translateY(9px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;border-bottom:1px solid var(--line)}.modal-head h3{font-size:15px;margin:0}.modal-body{padding:20px}.modal-foot{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;padding:14px 20px;border-top:1px solid var(--line);background:#fbfcfd;border-radius:0 0 18px 18px}.modal-close{border:0;background:#f1f4f5;color:#637581;width:30px;height:30px;border-radius:8px}.toast-stack{position:fixed;top:84px;right:22px;z-index:150;display:grid;gap:8px;width:min(360px,calc(100vw - 32px))}.toast{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:11px;padding:12px 14px;box-shadow:var(--shadow);animation:toastIn .2s ease-out}.toast.error{border-left-color:var(--danger)}.toast.success{border-left-color:var(--success)}.toast i{margin-top:2px;color:var(--primary)}.toast.error i{color:var(--danger)}.toast.success i{color:var(--success)}.toast strong{display:block;font-size:11px}.toast span{display:block;color:var(--muted);font-size:10px;margin-top:2px}@keyframes toastIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}.camera-video-wrap{background:#0b1c26;border-radius:14px;overflow:hidden;min-height:260px;display:grid;place-items:center}#cameraVideo{width:100%;max-height:58vh;object-fit:cover}.camera-hint{color:var(--muted);font-size:11px;text-align:center;padding:12px 0 0}.loader{width:17px;height:17px;border:2px solid rgba(255,255,255,.4);border-top-color:currentColor;border-radius:50%;display:inline-block;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loading-block{display:flex;justify-content:center;align-items:center;gap:10px;padding:38px 16px;color:var(--muted);font-size:12px}.loading-block .loader{border-color:#dce6e8;border-top-color:var(--primary);width:22px;height:22px}.code-reveal{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f2f8f6;border:1px solid #d8ebe5;padding:15px;border-radius:11px}.code-reveal strong{font-size:20px;color:var(--primary-dark);letter-spacing:.04em}.permission-table td:first-child{min-width:170px}.switch{display:inline-flex;align-items:center;gap:7px;cursor:pointer}.switch input{accent-color:var(--primary);width:16px;height:16px}.status-line{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}.status-dot{width:8px;height:8px;border-radius:50%;background:#16a34a}.status-dot.offline{background:#dc2626}.image-thumb{width:54px;height:54px;object-fit:cover;border:1px solid var(--line);border-radius:8px;background:#f4f6f7}.print-area{display:none}
+    @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}.payment-layout{grid-template-columns:1fr}.payment-side-card{display:none}}
+    @media(max-width:760px){.sidebar{display:none}.main-area{margin-left:0}.topbar{height:62px;padding:0 15px}.content{padding:20px 14px 100px}.topbar-title{font-size:15px}.topbar-subtitle{display:none}.mobile-nav{position:fixed;z-index:40;display:grid;grid-template-columns:repeat(5,1fr);bottom:0;inset-inline:0;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:7px 5px calc(7px + env(safe-area-inset-bottom))}.mobile-nav button{border:0;background:transparent;color:#82919a;display:grid;justify-items:center;gap:3px;font-size:9px;padding:4px 2px}.mobile-nav button i{font-size:17px}.mobile-nav button.active{color:var(--primary);font-weight:700}.grid-2,.grid-3{grid-template-columns:1fr}.grid-4{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat-card{padding:13px;gap:9px}.stat-icon{width:35px;height:35px;font-size:14px}.stat-value{font-size:18px}.page-heading{display:block}.heading-actions{margin-top:12px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.filters{display:grid;grid-template-columns:1fr 1fr}.filters .field,.filters .field.search-field{min-width:0}.filters .search-field{grid-column:1/-1}.terminal-card{padding:15px}.key{min-height:53px}.login-card{padding:28px 22px}.modal-backdrop{padding:9px}.modal{max-height:92vh}.modal-body{padding:15px}.toast-stack{top:70px;right:10px}}
+    @media(max-width:390px){.grid-4{grid-template-columns:1fr 1fr}.stat-value{font-size:16px}.filters{grid-template-columns:1fr}.filters .search-field{grid-column:auto}}
+    @media print{body *{visibility:hidden!important}#printArea,#printArea *{visibility:visible!important}#printArea{display:block!important;position:absolute;inset:0;width:100%;padding:20px;color:#111;font-family:Arial,sans-serif}}
+  </style>
+</head>
+<body>
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="brand-mark"><i class="fa-solid fa-credit-card"></i></div>
+      <h1 class="login-title">EDC PAYMENT</h1>
+      <p class="login-subtitle">ระบบรับชำระเงิน</p>
+      <form id="loginForm" class="stack">
+        <div class="field"><label for="accessCode">รหัสเข้าใช้งาน</label><div class="row" style="gap:0;position:relative;"><input id="accessCode" class="input" type="password" autocomplete="current-password" placeholder="กรอกรหัสเข้าใช้งาน" required style="padding-right:45px;"><button type="button" id="toggleLoginCode" class="btn-ghost" aria-label="แสดงหรือซ่อนรหัส" style="position:absolute;right:5px;top:3px;height:34px;"><i class="fa-regular fa-eye"></i></button></div></div>
+        <button id="loginButton" class="btn btn-primary btn-block" type="submit" style="padding:12px;">เข้าสู่ระบบ</button>
+      </form>
+      <button class="login-config" id="configureApiButton" type="button"><i class="fa-solid fa-link"></i> ตั้งค่าการเชื่อมต่อระบบ</button>
+      <div class="login-footer">EDC PAYMENT SYSTEM</div>
+    </div>
+  </section>
+
+  <div id="appShell" class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><div class="brand-icon"><i class="fa-solid fa-credit-card"></i></div><div><strong>EDC PAYMENT</strong><span>PAYMENT MANAGEMENT</span></div></div>
+      <div class="nav-section">เมนูหลัก</div><nav id="sidebarMainNav" class="nav-list"></nav>
+      <div class="nav-section">จัดการระบบ</div><nav id="sidebarMoreNav" class="nav-list"></nav>
+      <div class="sidebar-bottom"><div class="sidebar-user"><div class="avatar" id="sidebarAvatar">U</div><div style="min-width:0;flex:1;"><strong id="sidebarUserName">ผู้ใช้งาน</strong><span id="sidebarUserRole">CASHIER</span></div><button class="btn-ghost" id="sidebarLogout" title="ออกจากระบบ" style="color:#b5c5ce;"><i class="fa-solid fa-right-from-bracket"></i></button></div></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><div><h1 class="topbar-title" id="topbarTitle">รับชำระเงิน</h1><div class="topbar-subtitle" id="topbarSubtitle">ระบบรับชำระเงินผ่าน QR Code</div></div><div class="topbar-actions"><span class="status-line hidden" id="apiStatusLine"><span class="status-dot"></span><span>เชื่อมต่อแล้ว</span></span><button class="icon-button" id="notificationsButton" title="การแจ้งเตือน"><i class="fa-regular fa-bell"></i><span id="notificationDot" class="notification-dot hidden"></span></button><button class="icon-button" id="changeCodeButton" title="เปลี่ยนรหัสเข้าใช้งาน"><i class="fa-solid fa-key"></i></button><button class="icon-button" id="topLogout" title="ออกจากระบบ"><i class="fa-solid fa-right-from-bracket"></i></button></div></header>
+      <div id="pageContent" class="content"><div class="loading-block"><span class="loader"></span> กำลังโหลดข้อมูล</div></div>
+    </main>
+    <nav id="mobileNav" class="mobile-nav"></nav>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true"><div id="modalBox" class="modal"><div class="modal-head"><h3 id="modalTitle">รายละเอียด</h3><button class="modal-close" id="modalClose" type="button"><i class="fa-solid fa-xmark"></i></button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"></div></div></div>
+  <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+  <div id="cameraBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true"><div class="modal"><div class="modal-head"><h3><i class="fa-solid fa-camera"></i> ถ่ายหลักฐานการชำระเงิน</h3><button class="modal-close" id="cameraClose" type="button"><i class="fa-solid fa-xmark"></i></button></div><div class="modal-body"><div class="camera-video-wrap"><video id="cameraVideo" autoplay playsinline muted></video></div><p class="camera-hint" id="cameraHint">จัดสลิปให้อยู่ในกรอบภาพ แล้วกดถ่ายภาพ ระบบจะส่งตรวจสอบทันที</p><div id="cameraFallback" class="hidden" style="padding-top:12px;"><input id="cameraFileInput" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" class="input"></div></div><div class="modal-foot"><button class="btn btn-outline" id="cameraCancel" type="button">ยกเลิก</button><button class="btn btn-primary" id="captureSlipButton" type="button"><i class="fa-solid fa-camera"></i> ถ่ายและส่งตรวจสอบ</button></div></div></div>
+  <div id="printArea" class="print-area"></div>
+  <script>
+    'use strict';
+
+    /* ======================================================================
+       EDC PAYMENT SYSTEM - FRONTEND
+       API contract is aligned with Code.gs dispatchAction_().
+       ====================================================================== */
+
+    const APP_CONFIG = {
+      API_URL: '',
+      APP_NAME: 'EDC PAYMENT SYSTEM',
+      DEFAULT_DEVICE_ID: '',
+      SESSION_STORAGE_KEY: 'edc_session_v1',
+      API_URL_STORAGE_KEY: 'edc_api_url_v1',
+      DEVICE_STORAGE_KEY: 'edc_device_id_v1',
+      MAX_IMAGE_BYTES: 4 * 1024 * 1024,
+      PAGE_SIZE: 100
+    };
+
+    const NAV_ITEMS = [
+      { id: 'payment', label: 'รับชำระเงิน', icon: 'fa-credit-card', group: 'main', permission: 'payment.create' },
+      { id: 'transactions', label: 'ประวัติรายการ', icon: 'fa-receipt', group: 'main', permission: 'transaction.read.own' },
+      { id: 'reports', label: 'รายงาน', icon: 'fa-chart-column', group: 'main', permission: 'reports.read' },
+      { id: 'staff', label: 'พนักงาน', icon: 'fa-users', group: 'main', permission: 'staff.read' },
+      { id: 'settlement', label: 'จัดการยอดเงิน', icon: 'fa-wallet', group: 'more', permission: 'settlement.read' },
+      { id: 'shifts', label: 'จัดการกะพนักงาน', icon: 'fa-clock', group: 'more', permission: 'shift.manage' },
+      { id: 'refunds', label: 'ยกเลิก / คืนเงิน', icon: 'fa-arrow-rotate-left', group: 'more', permission: 'refund.request' },
+      { id: 'devices', label: 'จัดการอุปกรณ์', icon: 'fa-computer', group: 'more', permission: 'device.manage' },
+      { id: 'notifications', label: 'การแจ้งเตือน', icon: 'fa-bell', group: 'more', permission: 'notifications.read' },
+      { id: 'audit', label: 'บันทึกกิจกรรม', icon: 'fa-clipboard-list', group: 'more', permission: 'audit.read' },
+      { id: 'systemlogs', label: 'บันทึกระบบ', icon: 'fa-list-check', group: 'more', permission: 'systemlogs.read' },
+      { id: 'apiusage', label: 'การใช้งาน API', icon: 'fa-chart-line', group: 'more', role: 'ADMIN' },
+      { id: 'permissions', label: 'จัดการสิทธิ์', icon: 'fa-shield-halved', group: 'more', role: 'ADMIN' },
+      { id: 'media', label: 'คลังรูปภาพ', icon: 'fa-images', group: 'more', permission: 'settings.read' },
+      { id: 'settings', label: 'ตั้งค่าระบบ', icon: 'fa-gear', group: 'more', permission: 'settings.read' },
+      { id: 'database', label: 'สถานะระบบ', icon: 'fa-database', group: 'more', role: 'ADMIN' }
+    ];
+
+    const state = {
+      token: '', user: null, permissions: [], bootstrap: null, settings: {},
+      currentPage: 'payment', currentTransaction: null, transactionTimer: null,
+      cameraStream: null, cameraFallback: false, currentSlipImage: '',
+      currentTransactionRows: [], currentStaffRows: [], currentShift: null,
+      currentRefundRows: [], currentDeviceRows: [], currentMediaRows: [],
+      currentNotifications: [], modalActions: {}, reportData: null,
+      requestBusy: false, notificationUnread: false
+    };
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+    function getApiUrl() {
+      return (localStorage.getItem(APP_CONFIG.API_URL_STORAGE_KEY) || APP_CONFIG.API_URL || '').trim();
+    }
+
+    function getDeviceId() {
+      let id = localStorage.getItem(APP_CONFIG.DEVICE_STORAGE_KEY);
+      if (!id) {
+        id = 'EDC-' + (window.crypto && crypto.randomUUID ? crypto.randomUUID().slice(0, 8) : Math.random().toString(36).slice(2, 10)).toUpperCase();
+        localStorage.setItem(APP_CONFIG.DEVICE_STORAGE_KEY, id);
+      }
+      return id;
+    }
+
+    function escapeHtml(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, character => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[character]));
+    }
+
+    function formatMoney(value) {
+      return new Intl.NumberFormat('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(value || 0));
+    }
+
+    function formatDate(value, withTime = true) {
+      if (!value) return '-';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return new Intl.DateTimeFormat('th-TH', withTime
+        ? { dateStyle: 'short', timeStyle: 'short' }
+        : { dateStyle: 'medium' }).format(date);
+    }
+
+    function todayInputValue() {
+      const now = new Date();
+      return [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
+    }
+
+    function monthStartValue() {
+      const now = new Date();
+      return [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), '01'].join('-');
+    }
+
+    function initials(name) {
+      const value = String(name || '').trim();
+      return value ? value.slice(0, 1).toUpperCase() : 'U';
+    }
+
+    function normalizeStatus(status) {
+      const value = String(status || '').toUpperCase();
+      const map = {
+        PAID: ['สำเร็จ', 'success'], PENDING: ['รอชำระ', 'warning'], EXPIRED: ['หมดอายุ', 'muted'],
+        CANCELLED: ['ยกเลิก', 'danger'], FAILED: ['ไม่สำเร็จ', 'danger'],
+        ACTIVE: ['ใช้งาน', 'success'], INACTIVE: ['ระงับใช้งาน', 'muted'],
+        OPEN: ['กำลังเปิดกะ', 'success'], CLOSED: ['ปิดกะแล้ว', 'muted'],
+        APPROVED_PENDING_PROVIDER: ['รอดำเนินการคืนเงิน', 'warning'], APPROVED: ['อนุมัติ', 'success'],
+        REJECTED: ['ไม่อนุมัติ', 'danger'], SUCCESS: ['สำเร็จ', 'success'], ERROR: ['ผิดพลาด', 'danger'],
+        UNREAD: ['ยังไม่อ่าน', 'warning'], READ: ['อ่านแล้ว', 'muted']
+      };
+      return map[value] || [value || '-', 'muted'];
+    }
+
+    function statusBadge(status) {
+      const [label, tone] = normalizeStatus(status);
+      return `<span class="badge badge-${tone}">${escapeHtml(label)}</span>`;
+    }
+
+    function loadingHtml(message = 'กำลังโหลดข้อมูล') {
+      return `<div class="loading-block"><span class="loader"></span>${escapeHtml(message)}</div>`;
+    }
+
+    function emptyHtml(message = 'ไม่พบข้อมูล') {
+      return `<div class="empty-state"><i class="fa-regular fa-folder-open"></i><strong>${escapeHtml(message)}</strong></div>`;
+    }
+
+    function userCan(permission) {
+      if (!state.user) return false;
+      if (state.user.role === 'ADMIN') return true;
+      return state.permissions.includes(permission);
+    }
+
+    function friendlyError(message, code) {
+      const text = String(message || 'ไม่สามารถดำเนินการได้');
+      if (/connect|spreadsheet|sheet|database|fetch|network|timeout|server|script|exception/i.test(text)) return 'เชื่อมต่อข้อมูลไม่สำเร็จ';
+      if (code === 'SESSION_INVALID' || code === 'SESSION_EXPIRED' || /session/i.test(text)) return 'หมดเวลาเข้าใช้งาน กรุณาเข้าสู่ระบบอีกครั้ง';
+      if (code === 'PERMISSION_DENIED') return 'คุณไม่มีสิทธิ์ดำเนินการนี้';
+      return text;
+    }
+
+    async function api(action, data = {}, options = {}) {
+      const apiUrl = getApiUrl();
+      if (!apiUrl) throw new Error('กรุณาตั้งค่าการเชื่อมต่อระบบก่อนใช้งาน');
+      const request = { action, data };
+      if (state.token && action !== 'login') request.token = state.token;
+      let response;
+      try {
+        response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(request),
+          redirect: 'follow'
+        });
+      } catch (error) {
+        throw new Error('เชื่อมต่อข้อมูลไม่สำเร็จ');
+      }
+      let result;
+      try { result = await response.json(); }
+      catch (error) { throw new Error('ไม่สามารถอ่านผลการตอบกลับได้ กรุณาตรวจสอบการเชื่อมต่อ'); }
+      if (!response.ok || !result || result.ok !== true) {
+        const code = result && result.code ? result.code : '';
+        const message = friendlyError(result && result.message, code);
+        if (String(code).indexOf('SESSION_') === 0 || code === 'USER_INACTIVE') forceLogout(message);
+        const error = new Error(message);
+        error.code = code;
+        error.response = result;
+        throw error;
+      }
+      return result.data || {};
+    }
+
+    function toast(message, type = 'info', title = '') {
+      const stack = $('#toastStack');
+      if (!stack) return;
+      const icon = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : type === 'warning' ? 'fa-triangle-exclamation' : 'fa-circle-info';
+      const toastNode = document.createElement('div');
+      toastNode.className = `toast ${type === 'error' ? 'error' : type === 'success' ? 'success' : ''}`;
+      toastNode.innerHTML = `<i class="fa-solid ${icon}"></i><div><strong>${escapeHtml(title || (type === 'success' ? 'สำเร็จ' : type === 'error' ? 'ไม่สำเร็จ' : 'แจ้งเตือน'))}</strong><span>${escapeHtml(message)}</span></div>`;
+      stack.appendChild(toastNode);
+      window.setTimeout(() => toastNode.remove(), 4200);
+    }
+
+    function openModal(title, body, buttons = [], options = {}) {
+      const backdrop = $('#modalBackdrop');
+      $('#modalTitle').textContent = title;
+      $('#modalBody').innerHTML = body;
+      $('#modalBox').classList.toggle('wide', !!options.wide);
+      const foot = $('#modalFoot');
+      foot.innerHTML = '';
+      state.modalActions = {};
+      buttons.forEach((button, index) => {
+        const id = `modal-action-${index}`;
+        state.modalActions[id] = button.onClick;
+        const element = document.createElement('button');
+        element.type = 'button';
+        element.className = `btn ${button.className || 'btn-outline'}`;
+        element.dataset.modalAction = id;
+        element.innerHTML = button.icon ? `<i class="fa-solid ${button.icon}"></i>${escapeHtml(button.label)}` : escapeHtml(button.label);
+        foot.appendChild(element);
+      });
+      backdrop.classList.add('show');
+      backdrop.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      $('#modalBackdrop').classList.remove('show');
+      $('#modalBackdrop').setAttribute('aria-hidden', 'true');
+      state.modalActions = {};
+    }
+
+    function showConfirm(title, message, onConfirm, danger = false) {
+      openModal(title, `<p>${escapeHtml(message)}</p>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'ยืนยัน', className: danger ? 'btn-danger' : 'btn-primary', onClick: async () => { closeModal(); await onConfirm(); } }
+      ]);
+    }
+
+    function showApiConfig() {
+      const current = getApiUrl();
+      openModal('ตั้งค่าการเชื่อมต่อ API', `
+        <div class="stack">
+          <div class="field"><label for="apiUrlInput">Google Apps Script Web App URL</label><input id="apiUrlInput" class="input" type="url" placeholder="https://script.google.com/macros/s/.../exec" value="${escapeHtml(current)}"></div>
+          <p class="field-hint">วาง URL ที่ได้จากการ Deploy Google Apps Script เป็น Web App และต้องลงท้ายด้วย /exec</p>
+        </div>`, [
+        { label: 'ทดสอบการเชื่อมต่อ', className: 'btn-outline', onClick: async () => {
+          const value = $('#apiUrlInput').value.trim();
+          if (!value) return toast('กรุณากรอก URL ก่อน', 'warning');
+          try {
+            const response = await fetch(value, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'health', data: {} }), redirect: 'follow' });
+            const json = await response.json();
+            if (json && json.ok) toast('เชื่อมต่อระบบสำเร็จ', 'success'); else toast('เชื่อมต่อข้อมูลไม่สำเร็จ', 'error');
+          } catch (error) { toast('เชื่อมต่อข้อมูลไม่สำเร็จ', 'error'); }
+        }},
+        { label: 'บันทึก URL', className: 'btn-primary', onClick: () => {
+          const value = $('#apiUrlInput').value.trim();
+          if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(value)) return toast('รูปแบบ URL ไม่ถูกต้อง', 'warning');
+          localStorage.setItem(APP_CONFIG.API_URL_STORAGE_KEY, value);
+          closeModal(); toast('บันทึกการเชื่อมต่อแล้ว', 'success');
+        }}
+      ], { wide: false });
+    }
+
+    function showLoadingPage(message) {
+      $('#pageContent').innerHTML = loadingHtml(message);
+    }
+
+    function renderNavigation() {
+      const allowed = item => (!item.permission || userCan(item.permission)) && (!item.role || state.user.role === item.role);
+      const main = NAV_ITEMS.filter(item => item.group === 'main' && allowed(item));
+      const more = NAV_ITEMS.filter(item => item.group === 'more' && allowed(item));
+      const createButton = item => `<button class="nav-item ${state.currentPage === item.id ? 'active' : ''}" type="button" data-page="${item.id}"><i class="fa-solid ${item.icon}"></i><span>${item.label}</span></button>`;
+      $('#sidebarMainNav').innerHTML = main.map(createButton).join('');
+      $('#sidebarMoreNav').innerHTML = more.map(createButton).join('');
+      const mobileItems = ['payment', 'transactions', 'reports', 'staff'].map(id => NAV_ITEMS.find(item => item.id === id)).filter(item => item && allowed(item));
+      const mobileMarkup = mobileItems.map(item => `<button type="button" data-page="${item.id}" class="${state.currentPage === item.id ? 'active' : ''}"><i class="fa-solid ${item.icon}"></i><span>${item.label}</span></button>`).join('');
+      const hasMore = more.length > 0;
+      $('#mobileNav').innerHTML = mobileMarkup + (hasMore ? `<button type="button" data-page="more" class="${state.currentPage === 'more' || more.some(item => item.id === state.currentPage) ? 'active' : ''}"><i class="fa-solid fa-bars"></i><span>เพิ่มเติม</span></button>` : '');
+    }
+
+    function setActivePage(pageId) {
+      state.currentPage = pageId;
+      renderNavigation();
+      const item = NAV_ITEMS.find(nav => nav.id === pageId);
+      $('#topbarTitle').textContent = item ? item.label : (pageId === 'more' ? 'เมนูเพิ่มเติม' : 'EDC PAYMENT');
+      $('#topbarSubtitle').textContent = pageId === 'payment' ? 'ระบบรับชำระเงินผ่าน QR Code' : 'ระบบจัดการ EDC Payment';
+    }
+
+    async function navigate(pageId) {
+      const item = NAV_ITEMS.find(nav => nav.id === pageId);
+      if (!item) return;
+      if (item.permission && !userCan(item.permission)) return toast('คุณไม่มีสิทธิ์เข้าถึงเมนูนี้', 'error');
+      if (item.role && state.user.role !== item.role) return toast('คุณไม่มีสิทธิ์เข้าถึงเมนูนี้', 'error');
+      if (state.currentTransaction && state.currentTransaction.status === 'PENDING' && pageId !== 'payment') {
+        return showConfirm('มีรายการรอชำระเงิน', 'ต้องการออกจากหน้ารับชำระหรือไม่? รายการ QR ปัจจุบันจะยังคงรอชำระอยู่', async () => { setActivePage(pageId); await loadPage(pageId); });
+      }
+      setActivePage(pageId);
+      await loadPage(pageId);
+    }
+
+    async function loadPage(pageId) {
+      try {
+        switch (pageId) {
+          case 'payment': renderPaymentPage(); break;
+          case 'transactions': await renderTransactionsPage(); break;
+          case 'reports': await renderReportsPage(); break;
+          case 'staff': await renderStaffPage(); break;
+          case 'settlement': await renderSettlementPage(); break;
+          case 'shifts': await renderShiftsPage(); break;
+          case 'refunds': await renderRefundsPage(); break;
+          case 'devices': await renderDevicesPage(); break;
+          case 'notifications': await renderNotificationsPage(); break;
+          case 'audit': await renderAuditPage(); break;
+          case 'systemlogs': await renderSystemLogsPage(); break;
+          case 'apiusage': await renderApiUsagePage(); break;
+          case 'permissions': await renderPermissionsPage(); break;
+          case 'media': await renderMediaPage(); break;
+          case 'settings': await renderSettingsPage(); break;
+          case 'database': await renderDatabasePage(); break;
+          default: renderPaymentPage();
+        }
+      } catch (error) {
+        $('#pageContent').innerHTML = `<div class="card card-pad">${emptyHtml(friendlyError(error.message, error.code))}<div class="text-center"><button class="btn btn-outline" data-action="reload-page"><i class="fa-solid fa-rotate"></i> ลองอีกครั้ง</button></div></div>`;
+      }
+    }
+
+    function showApp() {
+      $('#loginScreen').classList.add('hidden');
+      $('#appShell').style.display = 'block';
+      $('#sidebarUserName').textContent = state.user.fullName || 'ผู้ใช้งาน';
+      $('#sidebarUserRole').textContent = state.user.role || '';
+      $('#sidebarAvatar').textContent = initials(state.user.fullName);
+      $('#apiStatusLine').classList.remove('hidden');
+      renderNavigation();
+    }
+
+    async function afterLogin() {
+      const bootstrap = await api('getBootstrap');
+      state.bootstrap = bootstrap;
+      state.user = bootstrap.user || state.user;
+      state.permissions = Array.isArray(bootstrap.permissions) ? bootstrap.permissions : [];
+      state.settings = bootstrap.settings || {};
+      state.currentShift = bootstrap.openShift || null;
+      showApp();
+      setActivePage('payment');
+      await loadPage('payment');
+      refreshNotificationDot();
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      const input = $('#accessCode');
+      const button = $('#loginButton');
+      const accessCode = input.value.trim();
+      if (!accessCode) return toast('กรุณากรอกรหัสเข้าใช้งาน', 'warning');
+      button.disabled = true;
+      button.innerHTML = '<span class="loader"></span> กำลังเข้าสู่ระบบ';
+      try {
+        const result = await api('login', { accessCode, deviceId: getDeviceId() });
+        if (!result.token || !result.user) throw new Error('เข้าสู่ระบบไม่สำเร็จ');
+        state.token = result.token;
+        state.user = result.user;
+        sessionStorage.setItem(APP_CONFIG.SESSION_STORAGE_KEY, JSON.stringify({ token: result.token, user: result.user }));
+        await afterLogin();
+        toast('เข้าสู่ระบบสำเร็จ', 'success');
+      } catch (error) {
+        state.token = ''; state.user = null;
+        sessionStorage.removeItem(APP_CONFIG.SESSION_STORAGE_KEY);
+        toast(friendlyError(error.message, error.code), 'error');
+      } finally {
+        button.disabled = false;
+        button.innerHTML = 'เข้าสู่ระบบ';
+      }
+    }
+
+    async function restoreSession() {
+      const savedUrl = localStorage.getItem(APP_CONFIG.API_URL_STORAGE_KEY);
+      if (savedUrl) APP_CONFIG.API_URL = savedUrl;
+      const saved = sessionStorage.getItem(APP_CONFIG.SESSION_STORAGE_KEY);
+      if (!saved) return;
+      try {
+        const session = JSON.parse(saved);
+        state.token = session.token || '';
+        state.user = session.user || null;
+        if (state.token) await afterLogin();
+      } catch (error) {
+        state.token = ''; state.user = null;
+        sessionStorage.removeItem(APP_CONFIG.SESSION_STORAGE_KEY);
+      }
+    }
+
+    async function forceLogout(message = '') {
+      state.token = ''; state.user = null; state.permissions = [];
+      sessionStorage.removeItem(APP_CONFIG.SESSION_STORAGE_KEY);
+      stopCamera(); clearTransactionTimer();
+      $('#appShell').style.display = 'none';
+      $('#loginScreen').classList.remove('hidden');
+      if (message) toast(message, 'warning');
+    }
+
+    async function logout() {
+      try { if (state.token) await api('logout'); } catch (error) { /* local logout still proceeds */ }
+      await forceLogout('ออกจากระบบเรียบร้อยแล้ว');
+      $('#accessCode').value = '';
+    }
+
+    /* ======================================================================
+       PAYMENT TERMINAL AND QR FLOW
+       ====================================================================== */
+
+    let paymentAmountDigits = '';
+
+    function renderPaymentPage() {
+      clearTransactionTimer();
+      if (state.currentTransaction && state.currentTransaction.status === 'PENDING') {
+        renderPendingPayment(state.currentTransaction);
+        startTransactionTimer(state.currentTransaction.qrExpiresAt);
+        return;
+      }
+      state.currentTransaction = null;
+      paymentAmountDigits = '';
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>รับชำระเงิน</h2><p>กรอกจำนวนเงินและกด ENTER เพื่อสร้าง QR Code</p></div><div class="heading-actions"><span class="badge badge-success"><i class="fa-solid fa-circle"></i> พร้อมรับชำระ</span></div></div>
+        <div class="payment-layout">
+          <section class="card terminal-card">
+            <div class="terminal-screen">
+              <div class="terminal-label">จำนวนเงินที่ต้องชำระ</div>
+              <div class="terminal-amount-row"><div class="terminal-amount"><span id="paymentAmount">0.00</span><small>THB</small></div><button class="amount-delete" type="button" data-key="back" title="ลบตัวเลขล่าสุด"><i class="fa-solid fa-delete-left"></i></button></div>
+              <div class="terminal-hint">กรอกจำนวนเงินด้วยแป้นตัวเลข</div>
+            </div>
+            <div class="popular-amounts">
+              ${[20,50,100,200,500,1000].map(amount => `<button class="btn btn-outline btn-sm" type="button" data-amount="${amount}">${amount.toLocaleString('en-US')} ฿</button>`).join('')}
+            </div>
+            <div class="keypad" id="paymentKeypad">
+              ${['1','2','3','4','5','6','7','8','9','clear','0','enter'].map(key => key === 'clear'
+                ? '<button class="key utility" type="button" data-key="clear"><i class="fa-solid fa-rotate-left"></i><span>ล้าง</span></button>'
+                : key === 'enter'
+                  ? '<button class="key enter" type="button" data-key="enter"><i class="fa-solid fa-arrow-right-to-bracket"></i><span>ENTER</span></button>'
+                  : `<button class="key" type="button" data-key="${key}">${key}</button>`).join('')}
+            </div>
+            <div class="field" style="margin-top:14px;"><label for="paymentNote">หมายเหตุ (ไม่บังคับ)</label><input id="paymentNote" class="input" maxlength="250" placeholder="ระบุรายละเอียดเพิ่มเติม"></div>
+          </section>
+          <aside class="stack payment-side-card">
+            <div class="card card-pad"><div class="row"><div class="stat-icon teal"><i class="fa-solid fa-shield-halved"></i></div><div><strong>รับชำระอย่างปลอดภัย</strong><div class="muted small">ตรวจสอบสลิปผ่าน Thunder API</div></div></div><div class="divider"></div><div class="status-line"><span class="status-dot"></span> ระบบพร้อมใช้งาน</div><div class="status-line" style="margin-top:10px;"><i class="fa-solid fa-mobile-screen"></i> รหัสเครื่อง ${escapeHtml(getDeviceId())}</div></div>
+            <div class="card card-pad"><h3 class="card-title">ขั้นตอนรับชำระ</h3><div class="stack" style="margin-top:14px;gap:11px;"><div class="row"><span class="badge badge-info">01</span><span>กรอกจำนวนเงิน</span></div><div class="row"><span class="badge badge-info">02</span><span>สร้าง QR Code</span></div><div class="row"><span class="badge badge-info">03</span><span>ถ่ายภาพสลิป</span></div><div class="row"><span class="badge badge-success">04</span><span>ตรวจสอบและยืนยัน</span></div></div></div>
+          </aside>
+        </div>`;
+      updatePaymentAmount();
+    }
+
+    function updatePaymentAmount() {
+      const number = Number(paymentAmountDigits || 0);
+      const display = $('#paymentAmount');
+      if (display) display.textContent = formatMoney(number);
+    }
+
+    function handlePaymentKey(key) {
+      if (key === 'enter') return createQrPayment();
+      if (key === 'clear') paymentAmountDigits = '';
+      else if (key === 'back') paymentAmountDigits = paymentAmountDigits.slice(0, -1);
+      else if (/^\d$/.test(key) && paymentAmountDigits.length < 10) {
+        paymentAmountDigits = (paymentAmountDigits + key).replace(/^0+(?=\d)/, '');
+      }
+      updatePaymentAmount();
+    }
+
+    async function createQrPayment() {
+      const amount = Number(paymentAmountDigits || 0);
+      if (!Number.isFinite(amount) || amount <= 0) return toast('กรุณากรอกจำนวนเงินให้ถูกต้อง', 'warning');
+      // The ENTER control is rendered with data-key="enter" (not id=createQrButton).
+      // Query the real control and guard against rapid repeated submissions.
+      const button = $('[data-key="enter"]');
+      if (button && button.disabled) return;
+      if (button) {
+        button.disabled = true;
+        button.innerHTML = '<span class="loader"></span> กำลังสร้าง QR Code';
+      }
+      try {
+        const result = await api('createPayment', { amount, note: $('#paymentNote').value.trim(), deviceId: getDeviceId() });
+        const raw = result.transaction || {};
+        const normalized = {
+          transactionId: raw.TransactionID || raw.transactionId || '',
+          amount: Number(raw.Amount || raw.amount || amount),
+          status: raw.Status || raw.status || 'PENDING',
+          cashierName: raw.CashierName || state.user.fullName,
+          deviceId: raw.DeviceID || getDeviceId(),
+          createdAt: raw.CreatedAt || new Date().toISOString(),
+          qrExpiresAt: raw.QRExpiresAt || result.expiresAt,
+          qrPayload: raw.QRPayload || (result.qr && result.qr.payload) || '',
+          qrMime: (result.qr && result.qr.mime) || raw.QRMime || 'image/png',
+          qrImage: result.qr && result.qr.image ? result.qr.image : '',
+          note: raw.Note || ''
+        };
+        if (!normalized.transactionId) throw new Error('ไม่สามารถสร้างรายการชำระเงินได้');
+        state.currentTransaction = normalized;
+        renderPendingPayment(normalized);
+        startTransactionTimer(normalized.qrExpiresAt);
+        toast('สร้าง QR Code เรียบร้อยแล้ว', 'success');
+      } catch (error) {
+        toast(friendlyError(error.message, error.code), 'error');
+        if (button && button.isConnected) {
+          button.disabled = false;
+          button.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> ENTER';
+        }
+      }
+    }
+
+    function normalizeQrSource(image, mime) {
+      if (!image) return '';
+      const value = String(image).trim();
+      if (/^(https?:|data:image\/)/i.test(value)) return value;
+      return `data:${mime || 'image/png'};base64,${value}`;
+    }
+
+    function renderPendingPayment(transaction) {
+      const qrSource = normalizeQrSource(transaction.qrImage, transaction.qrMime);
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>รอชำระเงิน</h2><p>ให้ลูกค้าสแกน QR Code เพื่อชำระเงิน</p></div><span class="badge badge-warning"><i class="fa-regular fa-clock"></i> รอชำระเงิน</span></div>
+        <div class="qr-layout">
+          <section class="card qr-card">
+            <div class="qr-amount-label">ยอดเงินที่ต้องชำระ</div><div class="qr-amount">${formatMoney(transaction.amount)} <small>บาท</small></div>
+            <div class="qr-image-wrap"><div id="paymentQrImage" class="qr-image">${qrSource ? `<img src="${escapeHtml(qrSource)}" alt="QR Code สำหรับชำระเงิน">` : '<div id="qrFallback"></div>'}</div></div>
+            <div class="qr-expiry"><i class="fa-regular fa-clock"></i> QR Code หมดอายุใน <strong id="qrCountdown">--:--</strong></div>
+            <div class="qr-transaction">เลขที่รายการ: <span class="mono">${escapeHtml(transaction.transactionId)}</span></div>
+            <div class="qr-scan-hint">เปิดแอปธนาคารและสแกน QR Code เพื่อชำระเงิน</div>
+            <button class="btn btn-primary btn-block" id="openCameraButton" type="button"><i class="fa-solid fa-camera"></i> ถ่ายหลักฐานการชำระเงิน</button>
+            ${userCan('payment.cancel') ? '<button class="btn btn-outline btn-block" id="cancelCurrentPaymentButton" type="button" style="margin-top:8px;"><i class="fa-solid fa-xmark"></i> ยกเลิกรายการ</button>' : ''}
+            <div class="qr-security-note"><i class="fa-solid fa-lock"></i> ระบบจะอนุมัติเมื่อการตรวจสอบสลิปผ่านเท่านั้น</div>
+          </section>
+          <aside class="stack payment-side-card"><div class="card card-pad"><h3 class="card-title">สถานะรายการ</h3><div class="status-line" style="margin-top:14px;"><span class="status-dot offline"></span> กำลังรอการชำระเงิน</div><div class="divider"></div><div class="row-between"><span class="muted small">ยอดเงิน</span><strong>${formatMoney(transaction.amount)} บาท</strong></div><div class="row-between" style="margin-top:10px;"><span class="muted small">พนักงาน</span><strong>${escapeHtml(transaction.cashierName || '-')}</strong></div><div class="row-between" style="margin-top:10px;"><span class="muted small">อุปกรณ์</span><strong>${escapeHtml(transaction.deviceId || '-')}</strong></div></div><div class="card card-pad"><h3 class="card-title">วิธีตรวจสอบ</h3><p class="muted small">ถ่ายภาพสลิปจากลูกค้า ระบบจะส่งตรวจสอบกับ Thunder โดยอัตโนมัติ หากผลไม่ผ่านสามารถถ่ายใหม่ได้ภายในเวลา QR Code</p></div></aside>
+        </div>`;
+      if (!qrSource && transaction.qrPayload && window.QRCode) {
+        const target = $('#qrFallback');
+        if (target) new QRCode(target, { text: transaction.qrPayload, width: 210, height: 210, correctLevel: QRCode.CorrectLevel.M });
+      }
+    }
+
+    function clearTransactionTimer() {
+      if (state.transactionTimer) window.clearInterval(state.transactionTimer);
+      state.transactionTimer = null;
+    }
+
+    function startTransactionTimer(expiry) {
+      clearTransactionTimer();
+      const end = new Date(expiry).getTime();
+      const update = () => {
+        const remaining = Math.max(0, end - Date.now());
+        const minutes = String(Math.floor(remaining / 60000)).padStart(2, '0');
+        const seconds = String(Math.floor((remaining % 60000) / 1000)).padStart(2, '0');
+        const label = $('#qrCountdown');
+        if (label) label.textContent = `${minutes}:${seconds}`;
+        if (remaining <= 0) {
+          clearTransactionTimer();
+          if (state.currentTransaction) state.currentTransaction.status = 'EXPIRED';
+          const button = $('#openCameraButton');
+          if (button) button.disabled = true;
+          toast('QR Code หมดอายุแล้ว กรุณาสร้างรายการใหม่', 'warning');
+        }
+      };
+      update();
+      state.transactionTimer = window.setInterval(update, 1000);
+    }
+
+    async function cancelCurrentPayment() {
+      if (!state.currentTransaction) return;
+      const transactionId = state.currentTransaction.transactionId;
+      showConfirm('ยกเลิกรายการ', 'ต้องการยกเลิกรายการรับชำระเงินนี้หรือไม่?', async () => {
+        try {
+          await api('cancelPayment', { transactionId, reason: 'ผู้ใช้งานยกเลิกรายการ' });
+          clearTransactionTimer(); state.currentTransaction = null;
+          toast('ยกเลิกรายการเรียบร้อยแล้ว', 'success'); renderPaymentPage();
+        } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+      }, true);
+    }
+
+    async function openCamera() {
+      if (!state.currentTransaction || state.currentTransaction.status !== 'PENDING') return toast('ไม่พบรายการที่รอชำระเงิน', 'warning');
+      if (new Date(state.currentTransaction.qrExpiresAt).getTime() <= Date.now()) return toast('QR Code หมดอายุแล้ว กรุณาสร้างรายการใหม่', 'warning');
+      $('#cameraBackdrop').classList.add('show');
+      $('#cameraBackdrop').setAttribute('aria-hidden', 'false');
+      $('#cameraHint').textContent = 'จัดสลิปให้อยู่ในกรอบภาพ แล้วกดถ่ายภาพ ระบบจะส่งตรวจสอบทันที';
+      $('#cameraFallback').classList.add('hidden');
+      $('#captureSlipButton').disabled = false;
+      $('#captureSlipButton').innerHTML = '<i class="fa-solid fa-camera"></i> ถ่ายและส่งตรวจสอบ';
+      state.cameraFallback = false;
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('CAMERA_UNAVAILABLE');
+        state.cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
+        const video = $('#cameraVideo');
+        video.srcObject = state.cameraStream;
+        await video.play();
+      } catch (error) {
+        state.cameraFallback = true;
+        $('#cameraVideo').classList.add('hidden');
+        $('#cameraFallback').classList.remove('hidden');
+        $('#cameraHint').textContent = 'ไม่สามารถเปิดกล้องได้ กรุณาเลือกถ่ายภาพด้วยกล้องของอุปกรณ์';
+        $('#captureSlipButton').classList.add('hidden');
+      }
+    }
+
+    function stopCamera() {
+      if (state.cameraStream) {
+        state.cameraStream.getTracks().forEach(track => track.stop());
+        state.cameraStream = null;
+      }
+      const video = $('#cameraVideo');
+      if (video) { video.pause(); video.srcObject = null; video.classList.remove('hidden'); }
+      $('#cameraBackdrop').classList.remove('show');
+      $('#cameraBackdrop').setAttribute('aria-hidden', 'true');
+      $('#captureSlipButton').classList.remove('hidden');
+      $('#cameraFileInput').value = '';
+    }
+
+    function captureCameraImage() {
+      const video = $('#cameraVideo');
+      if (!video.videoWidth || !video.videoHeight) return toast('กล้องยังไม่พร้อม กรุณาลองอีกครั้ง', 'warning');
+      const canvas = document.createElement('canvas');
+      const scale = Math.min(1, 1800 / video.videoWidth);
+      canvas.width = Math.round(video.videoWidth * scale);
+      canvas.height = Math.round(video.videoHeight * scale);
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(blob => {
+        if (!blob) return toast('ไม่สามารถถ่ายภาพได้ กรุณาลองใหม่', 'error');
+        processSlipBlob(blob);
+      }, 'image/jpeg', 0.84);
+    }
+
+    function fileToBlob(file) {
+      if (!file) return;
+      if (!/^image\/(jpeg|png|webp)$/i.test(file.type)) return toast('รองรับเฉพาะภาพ JPG, PNG และ WebP', 'warning');
+      if (file.size > APP_CONFIG.MAX_IMAGE_BYTES) return toast('ขนาดภาพต้องไม่เกิน 4 MB', 'warning');
+      compressImageFile(file).then(processSlipBlob).catch(() => toast('ไม่สามารถอ่านภาพได้ กรุณาลองใหม่', 'error'));
+    }
+
+    function compressImageFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+          const image = new Image();
+          image.onerror = reject;
+          image.onload = () => {
+            const scale = Math.min(1, 1800 / image.width);
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(image.width * scale));
+            canvas.height = Math.max(1, Math.round(image.height * scale));
+            canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('IMAGE_COMPRESS_FAILED')), 'image/jpeg', 0.82);
+          };
+          image.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function blobToDataUrl(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    async function processSlipBlob(blob) {
+      if (!state.currentTransaction) return toast('ไม่พบรายการรับชำระเงิน', 'error');
+      if (blob.size > APP_CONFIG.MAX_IMAGE_BYTES) return toast('ขนาดภาพหลังปรับขนาดต้องไม่เกิน 4 MB', 'warning');
+      const transaction = state.currentTransaction;
+      if (new Date(transaction.qrExpiresAt).getTime() <= Date.now()) {
+        stopCamera();
+        transaction.status = 'EXPIRED';
+        return toast('QR Code หมดอายุแล้ว กรุณาสร้างรายการใหม่', 'warning');
+      }
+      const imageData = await blobToDataUrl(blob);
+      stopCamera();
+      await verifyCapturedSlip(transaction, imageData, blob.type || 'image/jpeg');
+    }
+
+    async function verifyCapturedSlip(transaction, imageBase64, mimeType) {
+      toast('กำลังตรวจสอบสลิป กรุณารอสักครู่', 'info', 'กำลังตรวจสอบ');
+      const page = $('#pageContent');
+      const previous = page.innerHTML;
+      page.innerHTML = `<div class="card card-pad"><div class="success-screen"><span class="loader" style="width:34px;height:34px;border-width:3px;border-color:#d9e9e5;border-top-color:var(--primary);"></span><h2 style="margin:18px 0 5px;font-size:20px;">กำลังตรวจสอบสลิป</h2><p class="muted">ระบบกำลังตรวจสอบข้อมูลการชำระเงิน กรุณาอย่าปิดหน้านี้</p><div class="badge badge-info">${escapeHtml(transaction.transactionId)}</div></div></div>`;
+      try {
+        const result = await api('verifySlip', { transactionId: transaction.transactionId, imageBase64, mimeType });
+        if (result.verified === true && result.canProceed === true) {
+          clearTransactionTimer();
+          transaction.status = 'PAID';
+          transaction.paidAt = new Date().toISOString();
+          transaction.slipCheck = result.slipCheck || null;
+          state.currentTransaction = transaction;
+          renderPaymentSuccess(transaction);
+          if (state.settings.soundEnabled) playSuccessSound();
+          toast('ตรวจสอบการชำระเงินสำเร็จ', 'success');
+          return;
+        }
+        const reason = result.reason || 'ไม่สามารถยืนยันการชำระเงินได้';
+        if (result.canRetry === true && new Date(transaction.qrExpiresAt).getTime() > Date.now()) {
+          state.currentTransaction = transaction;
+          renderPendingPayment(transaction);
+          startTransactionTimer(transaction.qrExpiresAt);
+          openModal('ตรวจสอบสลิปไม่ผ่าน', `<div class="text-center"><div class="stat-icon amber" style="width:58px;height:58px;margin:0 auto 14px;"><i class="fa-solid fa-triangle-exclamation"></i></div><p style="font-weight:700;">ไม่สามารถยืนยันการชำระเงิน</p><p class="muted">${escapeHtml(reason)}</p><p class="field-hint">กรุณาตรวจสอบภาพสลิปและถ่ายใหม่อีกครั้ง</p></div>`, [
+            { label: 'ถ่ายสลิปใหม่', className: 'btn-primary', icon: 'fa-camera', onClick: () => { closeModal(); openCamera(); } }
+          ]);
+        } else {
+          transaction.status = 'EXPIRED';
+          renderPaymentExpired(transaction);
+          toast(reason, 'warning');
+        }
+      } catch (error) {
+        const stillValid = new Date(transaction.qrExpiresAt).getTime() > Date.now();
+        if (!stillValid || error.code === 'QR_EXPIRED') {
+          transaction.status = 'EXPIRED';
+          renderPaymentExpired(transaction);
+          return;
+        }
+        state.currentTransaction = transaction;
+        renderPendingPayment(transaction);
+        startTransactionTimer(transaction.qrExpiresAt);
+        openModal('ยังตรวจสอบไม่สำเร็จ', `<p>${escapeHtml(friendlyError(error.message, error.code))}</p><p class="muted small">รายการยังไม่ถูกยืนยันการชำระเงิน คุณสามารถถ่ายสลิปใหม่ได้หาก QR ยังไม่หมดอายุ</p>`, [
+          { label: 'ถ่ายสลิปใหม่', className: 'btn-primary', icon: 'fa-camera', onClick: () => { closeModal(); openCamera(); } },
+          { label: 'ปิด', className: 'btn-outline', onClick: closeModal }
+        ]);
+      }
+    }
+
+    function renderPaymentSuccess(transaction) {
+      const settings = state.settings || {};
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>ผลการชำระเงิน</h2><p>รายการได้รับการตรวจสอบจากระบบแล้ว</p></div><span class="badge badge-success">ชำระเงินสำเร็จ</span></div>
+        <div class="card success-screen"><div class="success-mark"><i class="fa-solid fa-check"></i></div><h2 style="font-size:24px;margin:0 0 5px;color:#166534;">ชำระเงินสำเร็จ</h2><p class="muted">ตรวจสอบสลิปผ่านเรียบร้อยแล้ว</p><div class="qr-amount" style="margin:20px 0;">${formatMoney(transaction.amount)} <small>บาท</small></div><div class="receipt-details"><div><span>เลขที่รายการ</span><strong class="mono">${escapeHtml(transaction.transactionId)}</strong></div><div><span>วันที่ชำระ</span><strong>${formatDate(transaction.paidAt || new Date())}</strong></div><div><span>พนักงาน</span><strong>${escapeHtml(transaction.cashierName || state.user.fullName)}</strong></div><div><span>อุปกรณ์</span><strong>${escapeHtml(transaction.deviceId || getDeviceId())}</strong></div></div><div class="heading-actions" style="justify-content:center;margin-top:22px;"><button class="btn btn-outline" id="printReceiptButton"><i class="fa-solid fa-print"></i> พิมพ์ใบเสร็จ</button><button class="btn btn-primary" id="newPaymentButton"><i class="fa-solid fa-plus"></i> รับชำระรายการใหม่</button></div></div>`;
+      $('#printReceiptButton').addEventListener('click', () => printReceipt(transaction));
+      $('#newPaymentButton').addEventListener('click', () => { state.currentTransaction = null; renderPaymentPage(); });
+    }
+
+    function renderPaymentExpired(transaction) {
+      clearTransactionTimer();
+      state.currentTransaction = { ...transaction, status: 'EXPIRED' };
+      $('#pageContent').innerHTML = `<div class="card success-screen"><div class="stat-icon amber" style="width:68px;height:68px;margin:0 auto 15px;"><i class="fa-solid fa-clock"></i></div><h2>QR Code หมดอายุแล้ว</h2><p class="muted">รายการนี้ยังไม่ได้รับการยืนยันการชำระเงิน กรุณาสร้างรายการใหม่</p><div class="badge badge-muted mono">${escapeHtml(transaction.transactionId)}</div><div style="margin-top:20px;"><button class="btn btn-primary" id="newPaymentButton">สร้างรายการใหม่</button></div></div>`;
+      $('#newPaymentButton').addEventListener('click', () => { state.currentTransaction = null; renderPaymentPage(); });
+    }
+
+    function playSuccessSound() {
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        const context = new AudioContextClass();
+        [660, 880].forEach((frequency, index) => {
+          const oscillator = context.createOscillator();
+          const gain = context.createGain();
+          oscillator.frequency.value = frequency;
+          oscillator.type = 'sine';
+          gain.gain.setValueAtTime(0.001, context.currentTime + index * 0.13);
+          gain.gain.exponentialRampToValueAtTime(0.13, context.currentTime + index * 0.13 + 0.025);
+          gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + index * 0.13 + 0.18);
+          oscillator.connect(gain); gain.connect(context.destination);
+          oscillator.start(context.currentTime + index * 0.13);
+          oscillator.stop(context.currentTime + index * 0.13 + 0.2);
+        });
+        window.setTimeout(() => context.close(), 700);
+      } catch (error) { /* Audio is optional */ }
+    }
+
+    function printReceipt(transaction) {
+      const settings = state.settings || {};
+      $('#printArea').innerHTML = `
+        <div style="max-width:360px;margin:auto;font-family:Arial,sans-serif;">
+          <div style="text-align:center;border-bottom:1px dashed #777;padding-bottom:12px;margin-bottom:12px;">
+            ${settings.businessLogoUrl ? `<img src="${escapeHtml(settings.businessLogoUrl)}" alt="Logo" style="max-width:90px;max-height:70px;object-fit:contain;margin-bottom:8px;">` : ''}
+            <h2 style="margin:0;font-size:18px;">${escapeHtml(settings.businessName || 'EDC PAYMENT')}</h2>
+            <div style="font-size:11px;margin-top:4px;">${escapeHtml(settings.businessAddress || '')}</div>
+            <div style="font-size:11px;">${escapeHtml(settings.businessPhone || '')}</div>
+          </div>
+          <h3 style="text-align:center;margin:0 0 14px;font-size:15px;">ใบเสร็จรับเงิน</h3>
+          <div style="font-size:11px;line-height:1.9;">
+            <div>เลขที่รายการ: ${escapeHtml(transaction.transactionId)}</div>
+            <div>วันที่: ${escapeHtml(formatDate(transaction.paidAt || new Date()))}</div>
+            <div>พนักงาน: ${escapeHtml(transaction.cashierName || state.user.fullName)}</div>
+            <hr style="border:0;border-top:1px dashed #777;margin:10px 0;">
+            <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:bold;"><span>ยอดชำระ</span><span>${formatMoney(transaction.amount)} บาท</span></div>
+            <div style="margin-top:12px;text-align:center;">สถานะ: ชำระเงินสำเร็จ</div>
+            <div style="margin-top:14px;text-align:center;">${escapeHtml(settings.receiptFooter || 'ขอบคุณที่ใช้บริการ')}</div>
+          </div>
+        </div>`;
+      window.print();
+    }
+
+    /* ======================================================================
+       TRANSACTION HISTORY
+       ====================================================================== */
+
+    async function renderTransactionsPage() {
+      showLoadingPage('กำลังโหลดประวัติรายการ');
+      const result = await api('listTransactions', { limit: APP_CONFIG.PAGE_SIZE, offset: 0 });
+      state.currentTransactionRows = result.transactions || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>ประวัติรายการ</h2><p>ค้นหาและตรวจสอบรายการรับชำระเงินย้อนหลัง</p></div><div class="heading-actions"><button class="btn btn-outline" id="exportTransactionsButton"><i class="fa-solid fa-file-csv"></i> ส่งออก CSV</button><button class="btn btn-primary" id="refreshTransactionsButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div></div>
+        <div class="card filters"><div class="field search-field"><label>ค้นหารายการ</label><input id="transactionQuery" class="input" placeholder="เลขที่รายการ ชื่อพนักงาน หรือยอดเงิน"></div><div class="field"><label>สถานะ</label><select id="transactionStatus" class="select"><option value="">ทั้งหมด</option><option value="PAID">สำเร็จ</option><option value="PENDING">รอชำระ</option><option value="EXPIRED">หมดอายุ</option><option value="CANCELLED">ยกเลิก</option></select></div><div class="field"><label>ตั้งแต่วันที่</label><input id="transactionFrom" class="input" type="date"></div><div class="field"><label>ถึงวันที่</label><input id="transactionTo" class="input" type="date"></div><button class="btn btn-primary" id="filterTransactionsButton"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button></div>
+        <div class="card"><div class="row-between card-pad"><div><h3 class="card-title">รายการธุรกรรม</h3><p class="card-description">พบทั้งหมด ${Number(result.total || 0).toLocaleString('th-TH')} รายการ</p></div></div><div id="transactionsTableWrap">${renderTransactionsTable(state.currentTransactionRows)}</div></div>`;
+    }
+
+    function renderTransactionsTable(rows) {
+      if (!rows.length) return emptyHtml('ไม่พบรายการรับชำระเงิน');
+      return `<div class="table-wrap"><table><thead><tr><th>เลขที่รายการ</th><th>วันที่ทำรายการ</th><th>ยอดเงิน</th><th>พนักงาน</th><th>สถานะ</th><th class="text-right">จัดการ</th></tr></thead><tbody>${rows.map(row => `<tr><td class="mono">${escapeHtml(row.transactionId)}</td><td>${formatDate(row.createdAt)}</td><td><strong>${formatMoney(row.amount)} ฿</strong></td><td>${escapeHtml(row.cashierName || '-')}</td><td>${statusBadge(row.status)}</td><td class="text-right"><button class="btn btn-outline btn-sm" data-action="transaction-detail" data-id="${escapeHtml(row.transactionId)}"><i class="fa-regular fa-eye"></i> รายละเอียด</button></td></tr>`).join('')}</tbody></table></div>`;
+    }
+
+    async function filterTransactions() {
+      const data = {
+        query: $('#transactionQuery').value.trim(), status: $('#transactionStatus').value,
+        fromDate: $('#transactionFrom').value, toDate: $('#transactionTo').value,
+        limit: APP_CONFIG.PAGE_SIZE, offset: 0
+      };
+      $('#transactionsTableWrap').innerHTML = loadingHtml('กำลังค้นหารายการ');
+      try {
+        const result = await api('listTransactions', data);
+        state.currentTransactionRows = result.transactions || [];
+        $('#transactionsTableWrap').innerHTML = renderTransactionsTable(state.currentTransactionRows);
+        const description = $('.card .card-description');
+        if (description) description.textContent = `พบทั้งหมด ${Number(result.total || 0).toLocaleString('th-TH')} รายการ`;
+      } catch (error) {
+        $('#transactionsTableWrap').innerHTML = emptyHtml(friendlyError(error.message, error.code));
+      }
+    }
+
+    async function showTransactionDetail(transactionId) {
+      openModal('รายละเอียดรายการ', loadingHtml('กำลังโหลดรายละเอียด'), [], { wide: true });
+      try {
+        const result = await api('getTransaction', { transactionId });
+        const transaction = result.transaction || {};
+        const checks = result.slipChecks || [];
+        const canRefund = transaction.status === 'PAID' && userCan('refund.request');
+        const buttons = [
+          { label: 'ปิด', className: 'btn-outline', onClick: closeModal }
+        ];
+        if (transaction.status === 'PAID') buttons.unshift({ label: 'พิมพ์ใบเสร็จ', className: 'btn-outline', icon: 'fa-print', onClick: () => printReceipt(transaction) });
+        if (canRefund) buttons.unshift({ label: 'ขอคืนเงิน', className: 'btn-danger', icon: 'fa-arrow-rotate-left', onClick: () => { closeModal(); requestRefundForTransaction(transactionId); } });
+        openModal('รายละเอียดรายการ', `
+          <div class="grid grid-2">
+            <div class="card card-pad"><div class="muted small">เลขที่รายการ</div><strong class="mono">${escapeHtml(transaction.transactionId)}</strong></div>
+            <div class="card card-pad"><div class="muted small">สถานะ</div>${statusBadge(transaction.status)}</div>
+            <div class="card card-pad"><div class="muted small">ยอดเงิน</div><strong>${formatMoney(transaction.amount)} บาท</strong></div>
+            <div class="card card-pad"><div class="muted small">พนักงาน</div><strong>${escapeHtml(transaction.cashierName || '-')}</strong></div>
+            <div class="card card-pad"><div class="muted small">วันที่สร้างรายการ</div><strong>${formatDate(transaction.createdAt)}</strong></div>
+            <div class="card card-pad"><div class="muted small">วันที่ชำระเงิน</div><strong>${formatDate(transaction.paidAt)}</strong></div>
+          </div>
+          <div class="divider"></div><h4>ประวัติการตรวจสอบสลิป (${checks.length})</h4>
+          ${checks.length ? `<div class="stack">${checks.map(check => `<div class="card card-pad"><div class="row-between"><strong>ครั้งที่ ${escapeHtml(check.attemptNo)}</strong>${statusBadge(check.result)}</div><div class="muted small" style="margin-top:5px;">${escapeHtml(check.reason || check.failureReason || '-')}</div><div class="row" style="margin-top:10px;flex-wrap:wrap;">${check.imageUrl ? `<a href="${escapeHtml(check.imageUrl)}" target="_blank" rel="noopener"><img class="image-thumb" src="${escapeHtml(check.imageUrl)}" alt="สลิป"></a>` : ''}<span class="small muted">ยอดตรง: ${check.isAmountMatched ? 'ใช่' : 'ไม่ใช่'} · บัญชีตรง: ${check.isAccountMatched ? 'ใช่' : 'ไม่ใช่'} · สลิปซ้ำ: ${check.isDuplicate ? 'พบ' : 'ไม่พบ'}</span></div></div>`).join('')}</div>` : emptyHtml('ยังไม่มีประวัติการตรวจสอบสลิป')}
+          ${transaction.slipImageUrl ? `<div class="divider"></div><h4>หลักฐานการชำระเงินล่าสุด</h4><a href="${escapeHtml(transaction.slipImageUrl)}" target="_blank" rel="noopener"><img src="${escapeHtml(transaction.slipImageUrl)}" style="max-width:220px;border-radius:10px;border:1px solid var(--line);" alt="หลักฐานการชำระเงิน"></a>` : ''}
+        `, buttons, { wide: true });
+      } catch (error) {
+        openModal('ไม่สามารถโหลดข้อมูลได้', `<p>${escapeHtml(friendlyError(error.message, error.code))}</p>`, [{ label: 'ปิด', className: 'btn-primary', onClick: closeModal }]);
+      }
+    }
+
+    function exportTransactionsCsv() {
+      const rows = state.currentTransactionRows;
+      if (!rows.length) return toast('ไม่มีข้อมูลสำหรับส่งออก', 'warning');
+      const columns = ['transactionId', 'createdAt', 'amount', 'cashierName', 'deviceId', 'status', 'paidAt'];
+      const labels = ['เลขที่รายการ', 'วันที่สร้าง', 'ยอดเงิน', 'พนักงาน', 'อุปกรณ์', 'สถานะ', 'วันที่ชำระ'];
+      downloadCsv('edc-transactions.csv', labels, rows.map(row => columns.map(key => row[key] == null ? '' : row[key])));
+    }
+
+    function downloadCsv(fileName, headers, rows) {
+      const escapeCell = value => `"${String(value == null ? '' : value).replace(/"/g, '""')}"`;
+      const content = '\uFEFF' + [headers, ...rows].map(row => row.map(escapeCell).join(',')).join('\r\n');
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a'); link.href = url; link.download = fileName; link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    /* ======================================================================
+       DASHBOARD AND REPORTS
+       ====================================================================== */
+
+    async function renderReportsPage() {
+      showLoadingPage('กำลังโหลดรายงาน');
+      const fromDate = monthStartValue();
+      const toDate = todayInputValue();
+      const [dashboard, report] = await Promise.all([
+        api('getDashboard', { date: toDate }),
+        api('getReports', { fromDate, toDate })
+      ]);
+      state.reportData = report;
+      renderReportContent(dashboard, report, fromDate, toDate);
+    }
+
+    function renderReportContent(dashboard, report, fromDate, toDate) {
+      const today = dashboard.today || {};
+      const month = dashboard.month || {};
+      const summary = report.summary || {};
+      const daily = report.daily || [];
+      const maxDaily = Math.max(1, ...daily.map(item => Number(item.successAmount || 0)));
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>รายงานและ Dashboard</h2><p>ภาพรวมยอดรับชำระและประสิทธิภาพการทำรายการ</p></div><div class="heading-actions"><button class="btn btn-outline" id="refreshReportButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div></div>
+        <div class="grid grid-4">
+          ${statCard('ยอดรับเงินวันนี้', `${formatMoney(today.successAmount)} ฿`, 'fa-wallet', 'teal', `${Number(today.successCount || 0)} รายการสำเร็จ`)}
+          ${statCard('ยอดรับเงินเดือนนี้', `${formatMoney(month.successAmount)} ฿`, 'fa-chart-line', 'green', `${Number(month.successCount || 0)} รายการสำเร็จ`)}
+          ${statCard('รายการวันนี้', Number(today.totalCount || 0).toLocaleString('th-TH'), 'fa-receipt', 'blue', `${Number(today.pendingCount || 0)} รายการรอชำระ`)}
+          ${statCard('รายการหมดอายุ', Number(today.expiredCount || 0).toLocaleString('th-TH'), 'fa-clock', 'amber', `${Number(today.cancelledCount || 0)} รายการยกเลิก`)}
+        </div>
+        <div class="card filters" style="margin-top:16px;"><div class="field"><label>ตั้งแต่วันที่</label><input id="reportFromDate" type="date" class="input" value="${escapeHtml(fromDate)}"></div><div class="field"><label>ถึงวันที่</label><input id="reportToDate" type="date" class="input" value="${escapeHtml(toDate)}"></div><button class="btn btn-primary" id="applyReportFilter"><i class="fa-solid fa-filter"></i> แสดงรายงาน</button><button class="btn btn-outline" id="exportReportButton"><i class="fa-solid fa-file-csv"></i> ส่งออก CSV</button></div>
+        <div class="grid grid-2" style="margin-top:16px;">
+          <div class="card card-pad"><div class="row-between"><div><h3 class="card-title">ยอดรับชำระตามช่วงวันที่</h3><p class="card-description">${formatMoney(summary.successAmount)} บาท · ${Number(summary.successCount || 0)} รายการสำเร็จ</p></div><i class="fa-solid fa-chart-column muted"></i></div>
+            ${daily.length ? `<div class="chart-bars">${daily.map(item => `<div class="chart-bar-item"><div class="chart-bar-value">${Number(item.successAmount || 0) > 0 ? escapeHtml(Math.round(item.successAmount).toLocaleString('th-TH')) : '0'}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="height:${Math.max(2, Number(item.successAmount || 0) / maxDaily * 100)}%;"></div></div><div class="chart-bar-label">${escapeHtml(String(item.date || '').slice(5))}</div></div>`).join('')}</div>` : emptyHtml('ไม่มีข้อมูลในช่วงวันที่นี้')}
+          </div>
+          <div class="card card-pad"><h3 class="card-title">สรุปสถานะรายการ</h3><div class="stack" style="margin-top:15px;gap:13px;">
+            ${reportStatusRow('สำเร็จ', summary.successCount, 'success')}${reportStatusRow('รอชำระ', summary.pendingCount, 'warning')}${reportStatusRow('หมดอายุ', summary.expiredCount, 'muted')}${reportStatusRow('ยกเลิก', summary.cancelledCount, 'danger')}
+            <div class="divider"></div><div class="row-between"><strong>ยอดที่รับสำเร็จ</strong><strong style="color:var(--success);font-size:18px;">${formatMoney(summary.successAmount)} ฿</strong></div>
+          </div></div>
+        </div>
+        <div class="grid grid-2" style="margin-top:16px;">
+          <div class="card"><div class="card-pad"><h3 class="card-title">สรุปตามพนักงาน</h3></div>${renderStaffReportTable(report.byStaff || [])}</div>
+          <div class="card"><div class="card-pad"><h3 class="card-title">สรุปตามอุปกรณ์</h3></div>${renderDeviceReportTable(report.byDevice || [])}</div>
+        </div>`;
+    }
+
+    function statCard(label, value, icon, tone, note) {
+      return `<div class="stat-card"><div class="stat-icon ${tone}"><i class="fa-solid ${icon}"></i></div><div style="min-width:0;"><div class="stat-label">${escapeHtml(label)}</div><div class="stat-value">${escapeHtml(value)}</div><div class="stat-note">${escapeHtml(note || '')}</div></div></div>`;
+    }
+
+    function reportStatusRow(label, count, tone) {
+      return `<div class="row-between"><span>${escapeHtml(label)}</span><span class="badge badge-${tone}">${Number(count || 0).toLocaleString('th-TH')} รายการ</span></div>`;
+    }
+
+    function renderStaffReportTable(rows) {
+      if (!rows.length) return emptyHtml('ไม่มีข้อมูลพนักงาน');
+      return `<div class="table-wrap"><table><thead><tr><th>พนักงาน</th><th>รายการสำเร็จ</th><th>ยอดรับเงิน</th></tr></thead><tbody>${rows.map(row => `<tr><td>${escapeHtml(row.cashierName || row.cashierId)}</td><td>${Number(row.successCount || 0).toLocaleString('th-TH')}</td><td><strong>${formatMoney(row.successAmount)} ฿</strong></td></tr>`).join('')}</tbody></table></div>`;
+    }
+
+    function renderDeviceReportTable(rows) {
+      if (!rows.length) return emptyHtml('ไม่มีข้อมูลอุปกรณ์');
+      return `<div class="table-wrap"><table><thead><tr><th>อุปกรณ์</th><th>จำนวนรายการ</th><th>ยอดรับเงิน</th></tr></thead><tbody>${rows.map(row => `<tr><td class="mono">${escapeHtml(row.deviceId || '-')}</td><td>${Number(row.transactionCount || 0).toLocaleString('th-TH')}</td><td><strong>${formatMoney(row.successAmount)} ฿</strong></td></tr>`).join('')}</tbody></table></div>`;
+    }
+
+    async function applyReportFilter() {
+      const fromDate = $('#reportFromDate').value;
+      const toDate = $('#reportToDate').value;
+      if (!fromDate || !toDate || fromDate > toDate) return toast('กรุณาระบุช่วงวันที่ให้ถูกต้อง', 'warning');
+      showLoadingPage('กำลังสร้างรายงาน');
+      try {
+        const report = await api('getReports', { fromDate, toDate });
+        const dashboard = await api('getDashboard', { date: toDate });
+        state.reportData = report;
+        renderReportContent(dashboard, report, fromDate, toDate);
+      } catch (error) { $('#pageContent').innerHTML = emptyHtml(friendlyError(error.message, error.code)); }
+    }
+
+    function exportReportCsv() {
+      const report = state.reportData;
+      if (!report) return toast('ไม่มีรายงานสำหรับส่งออก', 'warning');
+      const headers = ['วันที่', 'จำนวนรายการ', 'รายการสำเร็จ', 'ยอดรับชำระ'];
+      const rows = (report.daily || []).map(item => [item.date, item.count, item.successCount, item.successAmount]);
+      downloadCsv('edc-daily-report.csv', headers, rows);
+    }
+
+    /* ======================================================================
+       STAFF MANAGEMENT
+       ====================================================================== */
+
+    async function renderStaffPage() {
+      showLoadingPage('กำลังโหลดข้อมูลพนักงาน');
+      const result = await api('listStaff', { status: '', query: '' });
+      state.currentStaffRows = result.staff || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>จัดการพนักงาน</h2><p>เพิ่ม แก้ไข เปลี่ยนรหัส และจัดการสถานะพนักงาน</p></div><div class="heading-actions">${userCan('staff.manage') ? '<button class="btn btn-primary" id="addStaffButton"><i class="fa-solid fa-user-plus"></i> เพิ่มพนักงาน</button>' : ''}</div></div>
+        <div class="card filters"><div class="field search-field"><label>ค้นหาพนักงาน</label><input id="staffQuery" class="input" placeholder="ชื่อ-สกุล หรือรหัสพนักงาน"></div><div class="field"><label>สถานะ</label><select id="staffStatus" class="select"><option value="">ทั้งหมด</option><option value="ACTIVE">ใช้งาน</option><option value="INACTIVE">ระงับใช้งาน</option></select></div><button class="btn btn-primary" id="filterStaffButton"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button></div>
+        <div class="card"><div class="row-between card-pad"><div><h3 class="card-title">รายชื่อพนักงาน</h3><p class="card-description">${state.currentStaffRows.length} บัญชี</p></div></div><div id="staffTableWrap">${renderStaffTable(state.currentStaffRows)}</div></div>`;
+    }
+
+    function renderStaffTable(rows) {
+      if (!rows.length) return emptyHtml('ยังไม่มีข้อมูลพนักงาน');
+      return `<div class="table-wrap"><table><thead><tr><th>ชื่อ-สกุล</th><th>รหัสพนักงาน</th><th>ตำแหน่ง</th><th>สถานะ</th><th>เข้าใช้งานล่าสุด</th><th class="text-right">จัดการ</th></tr></thead><tbody>${rows.map(row => {
+        const actions = userCan('staff.manage')
+          ? `<button class="btn btn-outline btn-sm" data-action="edit-staff" data-id="${escapeHtml(row.userId)}" title="แก้ไข"><i class="fa-solid fa-pen"></i></button> <button class="btn btn-outline btn-sm" data-action="reset-staff-code" data-id="${escapeHtml(row.userId)}" title="สร้างรหัสใหม่"><i class="fa-solid fa-key"></i></button> <button class="btn btn-outline btn-sm" data-action="toggle-staff-status" data-id="${escapeHtml(row.userId)}" data-status="${escapeHtml(row.status)}" title="เปลี่ยนสถานะ"><i class="fa-solid ${row.status === 'ACTIVE' ? 'fa-user-slash' : 'fa-user-check'}"></i></button>`
+          : '<span class="muted small">ดูอย่างเดียว</span>';
+        return `<tr><td><strong>${escapeHtml(row.prefix || '')} ${escapeHtml(row.fullName || '')}</strong></td><td class="mono">${escapeHtml(row.codePrefix || '-')}••••••••</td><td>${escapeHtml(row.role || '-')}</td><td>${statusBadge(row.status)}</td><td>${formatDate(row.lastLoginAt)}</td><td class="text-right nowrap">${actions}</td></tr>`;
+      }).join('')}</tbody></table></div>`;
+    }
+
+    function showCreateStaffModal() {
+      openModal('เพิ่มพนักงาน', `
+        <form id="createStaffForm" class="form-grid">
+          <div class="field"><label for="newStaffPrefix">คำนำหน้า</label><select id="newStaffPrefix" class="select" required><option value="นาย">นาย</option><option value="นาง">นาง</option><option value="นางสาว">นางสาว</option></select></div>
+          <div class="field"><label for="newStaffRole">ตำแหน่ง</label><select id="newStaffRole" class="select"><option value="CASHIER">Cashier</option><option value="MANAGER">Manager</option></select></div>
+          <div class="field full"><label for="newStaffName">ชื่อ-สกุล</label><input id="newStaffName" class="input" maxlength="120" required placeholder="กรอกชื่อและนามสกุล"></div>
+          <div class="field full"><label for="newStaffCodePrefix">ตัวอักษรขึ้นต้นรหัส</label><input id="newStaffCodePrefix" class="input" value="TN" maxlength="6" pattern="[A-Za-z]{1,6}" required><span class="field-hint">ใช้ตัวอักษรอังกฤษ 1–6 ตัว ตามด้วยตัวเลขสุ่ม 8 หลัก</span></div>
+        </form>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'สร้างพนักงาน', className: 'btn-primary', icon: 'fa-user-plus', onClick: submitCreateStaff }
+      ]);
+    }
+
+    async function submitCreateStaff() {
+      const fullName = $('#newStaffName').value.trim();
+      const codePrefix = $('#newStaffCodePrefix').value.trim().toUpperCase();
+      if (!fullName) return toast('กรุณากรอกชื่อ-สกุล', 'warning');
+      if (!/^[A-Z]{1,6}$/.test(codePrefix)) return toast('ตัวขึ้นต้นต้องเป็นตัวอักษรอังกฤษ 1–6 ตัว', 'warning');
+      try {
+        const result = await api('createStaff', {
+          prefix: $('#newStaffPrefix').value, fullName,
+          codePrefix, role: $('#newStaffRole').value
+        });
+        closeModal();
+        openModal('สร้างพนักงานสำเร็จ', `
+          <p>บันทึกข้อมูลพนักงานเรียบร้อยแล้ว กรุณาคัดลอกรหัสเข้าใช้งานและส่งให้พนักงาน</p>
+          <div class="code-reveal"><div><div class="muted small">รหัสเข้าใช้งาน (แสดงครั้งเดียว)</div><strong class="mono" id="generatedStaffCode">${escapeHtml(result.accessCode || '')}</strong></div><button class="btn btn-primary" type="button" data-copy="${escapeHtml(result.accessCode || '')}"><i class="fa-regular fa-copy"></i> คัดลอก</button></div>
+          <p class="field-hint">ระบบจะไม่แสดงรหัสเต็มนี้อีกครั้งหลังปิดหน้าต่าง</p>`, [
+          { label: 'ปิด', className: 'btn-primary', onClick: async () => { closeModal(); await renderStaffPage(); } }
+        ]);
+      } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    async function filterStaff() {
+      try {
+        const result = await api('listStaff', { query: $('#staffQuery').value.trim(), status: $('#staffStatus').value });
+        state.currentStaffRows = result.staff || [];
+        $('#staffTableWrap').innerHTML = renderStaffTable(state.currentStaffRows);
+      } catch (error) { $('#staffTableWrap').innerHTML = emptyHtml(friendlyError(error.message, error.code)); }
+    }
+
+    function showEditStaffModal(userId) {
+      const staff = state.currentStaffRows.find(row => row.userId === userId);
+      if (!staff) return;
+      openModal('แก้ไขข้อมูลพนักงาน', `
+        <form id="editStaffForm" class="form-grid">
+          <input type="hidden" id="editStaffId" value="${escapeHtml(staff.userId)}">
+          <div class="field"><label>คำนำหน้า</label><select id="editStaffPrefix" class="select"><option ${staff.prefix === 'นาย' ? 'selected' : ''}>นาย</option><option ${staff.prefix === 'นาง' ? 'selected' : ''}>นาง</option><option ${staff.prefix === 'นางสาว' ? 'selected' : ''}>นางสาว</option></select></div>
+          <div class="field"><label>ตำแหน่ง</label><select id="editStaffRole" class="select"><option value="CASHIER" ${staff.role === 'CASHIER' ? 'selected' : ''}>Cashier</option><option value="MANAGER" ${staff.role === 'MANAGER' ? 'selected' : ''}>Manager</option></select></div>
+          <div class="field full"><label>ชื่อ-สกุล</label><input id="editStaffName" class="input" maxlength="120" value="${escapeHtml(staff.fullName)}" required></div>
+        </form>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'บันทึกการแก้ไข', className: 'btn-primary', onClick: submitEditStaff }
+      ]);
+    }
+
+    async function submitEditStaff() {
+      try {
+        await api('updateStaff', { userId: $('#editStaffId').value, prefix: $('#editStaffPrefix').value, fullName: $('#editStaffName').value.trim(), role: $('#editStaffRole').value });
+        closeModal(); toast('บันทึกข้อมูลพนักงานแล้ว', 'success'); await renderStaffPage();
+      } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    function resetStaffCode(userId) {
+      const staff = state.currentStaffRows.find(row => row.userId === userId);
+      if (!staff) return;
+      openModal('สร้างรหัสเข้าใช้งานใหม่', `<div class="field"><label for="resetCodePrefix">ตัวอักษรขึ้นต้นรหัส</label><input id="resetCodePrefix" class="input" maxlength="6" value="${escapeHtml(staff.codePrefix || 'TN')}" pattern="[A-Za-z]{1,6}"></div><p class="field-hint">รหัสเดิมจะใช้เข้าสู่ระบบไม่ได้หลังจากเปลี่ยนรหัส</p>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'สร้างรหัสใหม่', className: 'btn-primary', onClick: async () => {
+          const codePrefix = $('#resetCodePrefix').value.trim().toUpperCase();
+          if (!/^[A-Z]{1,6}$/.test(codePrefix)) return toast('ตัวขึ้นต้นรหัสไม่ถูกต้อง', 'warning');
+          try {
+            const result = await api('resetStaffCode', { userId, codePrefix });
+            closeModal();
+            openModal('สร้างรหัสใหม่สำเร็จ', `<p>กรุณาคัดลอกรหัสและส่งให้พนักงาน เนื่องจากจะแสดงเพียงครั้งเดียว</p><div class="code-reveal"><strong class="mono">${escapeHtml(result.accessCode || '')}</strong><button class="btn btn-primary" data-copy="${escapeHtml(result.accessCode || '')}"><i class="fa-regular fa-copy"></i> คัดลอก</button></div>`, [{ label: 'ปิด', className: 'btn-primary', onClick: async () => { closeModal(); await renderStaffPage(); } }]);
+          } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+        }}
+      ]);
+    }
+
+    async function toggleStaffStatus(userId, currentStatus) {
+      const nextStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+      showConfirm('เปลี่ยนสถานะพนักงาน', `ต้องการ${nextStatus === 'ACTIVE' ? 'เปิดใช้งาน' : 'ระงับการใช้งาน'}บัญชีนี้หรือไม่?`, async () => {
+        try { await api('setStaffStatus', { userId, status: nextStatus }); toast('เปลี่ยนสถานะพนักงานแล้ว', 'success'); await renderStaffPage(); }
+        catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+      }, nextStatus === 'INACTIVE');
+    }
+
+    /* ======================================================================
+       GENERIC RECORD HELPERS AND SETTLEMENT
+       ====================================================================== */
+
+    function valueOf(record, ...keys) {
+      if (!record) return '';
+      for (const key of keys) if (record[key] !== undefined && record[key] !== null) return record[key];
+      return '';
+    }
+
+    async function renderSettlementPage() {
+      showLoadingPage('กำลังโหลดข้อมูลยอดเงิน');
+      const today = todayInputValue();
+      const [report, shiftResult, refundResult] = await Promise.all([
+        api('getReports', { fromDate: today, toDate: today }),
+        api('listShifts', { limit: 100 }),
+        api('listRefunds', { limit: 100 })
+      ]);
+      const summary = report.summary || {};
+      const shifts = shiftResult.shifts || [];
+      const refunds = refundResult.refunds || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>จัดการยอดเงิน</h2><p>สรุปยอดรับชำระ รายการคืนเงิน และสถานะกะตามวัน</p></div><div class="heading-actions"><button class="btn btn-outline" id="refreshSettlementButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div></div>
+        <div class="grid grid-4">${statCard('จำนวนรายการวันนี้', summary.totalCount || 0, 'fa-receipt', 'blue', `${summary.successCount || 0} รายการสำเร็จ`)}${statCard('ยอดรับเงินจริง', `${formatMoney(summary.successAmount)} ฿`, 'fa-wallet', 'green', 'เฉพาะรายการที่ตรวจสอบผ่าน')}${statCard('รายการรอชำระ', summary.pendingCount || 0, 'fa-hourglass-half', 'amber', 'ยังไม่นับเป็นยอดรับเงิน')}${statCard('คำขอคืนเงิน', refunds.length, 'fa-arrow-rotate-left', 'teal', 'รวมคำขอที่บันทึกไว้')}</div>
+        <div class="grid grid-2" style="margin-top:16px;">
+          <div class="card card-pad"><h3 class="card-title">ปิดยอดประจำวัน</h3><p class="card-description">สร้างรายงานสรุปยอด ณ วันที่เลือก</p><div class="field" style="margin-top:16px;"><label for="closingDate">วันที่ปิดยอด</label><input id="closingDate" class="input" type="date" value="${today}"></div><div class="field" style="margin-top:12px;"><label for="closingNotes">หมายเหตุ</label><textarea id="closingNotes" class="textarea" placeholder="หมายเหตุเพิ่มเติม"></textarea></div><button class="btn btn-primary btn-block" id="closeBusinessDayButton" style="margin-top:14px;"><i class="fa-solid fa-lock"></i> สรุปยอดและปิดวัน</button></div>
+          <div class="card card-pad"><h3 class="card-title">สรุปยอดรับชำระ</h3><div class="stack" style="margin-top:16px;gap:12px;"><div class="row-between"><span class="muted">ยอดรับชำระสำเร็จ</span><strong>${formatMoney(summary.successAmount)} บาท</strong></div><div class="row-between"><span class="muted">จำนวนรายการสำเร็จ</span><strong>${Number(summary.successCount || 0).toLocaleString('th-TH')}</strong></div><div class="row-between"><span class="muted">รายการรอตรวจสอบ</span><strong>${Number(summary.pendingCount || 0).toLocaleString('th-TH')}</strong></div><div class="row-between"><span class="muted">รายการหมดอายุ</span><strong>${Number(summary.expiredCount || 0).toLocaleString('th-TH')}</strong></div><div class="divider"></div><div class="field-hint">รายการที่ยังไม่ผ่านการยืนยันจะไม่ถูกนับเป็นยอดรับเงินจริง</div></div></div>
+        </div>
+        <div class="card" style="margin-top:16px;"><div class="card-pad"><h3 class="card-title">กะพนักงานล่าสุด</h3></div>${renderShiftsTable(shifts.slice(0, 10))}</div>`;
+    }
+
+    async function closeBusinessDay() {
+      const businessDate = $('#closingDate').value;
+      if (!businessDate) return toast('กรุณาเลือกวันที่ปิดยอด', 'warning');
+      showConfirm('ยืนยันการปิดยอดประจำวัน', `ต้องการสร้างรายงานปิดยอดวันที่ ${businessDate} หรือไม่?`, async () => {
+        try {
+          const result = await api('closeBusinessDay', { businessDate, deviceId: '', userId: '', notes: $('#closingNotes').value.trim() });
+          const closing = result.closing || {};
+          openModal('สรุปยอดประจำวันเรียบร้อยแล้ว', `<div class="grid grid-2"><div class="card card-pad"><div class="muted small">เลขที่ปิดยอด</div><strong class="mono">${escapeHtml(valueOf(closing, 'ClosingID', 'closingId'))}</strong></div><div class="card card-pad"><div class="muted small">วันที่</div><strong>${escapeHtml(businessDate)}</strong></div><div class="card card-pad"><div class="muted small">ยอดรับสำเร็จ</div><strong>${formatMoney(valueOf(closing, 'SuccessAmount', 'successAmount'))} บาท</strong></div><div class="card card-pad"><div class="muted small">ยอดสุทธิ</div><strong>${formatMoney(valueOf(closing, 'NetAmount', 'netAmount'))} บาท</strong></div></div><p class="field-hint">ระบบบันทึกข้อมูลปิดยอดแล้ว การปิดยอดนี้เป็นรายงานสรุป ไม่ได้ย้ายเงินหรือสั่งโอนเงินจากบัญชี</p>`, [{ label: 'ตกลง', className: 'btn-primary', onClick: async () => { closeModal(); await renderSettlementPage(); } }]);
+        } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+      });
+    }
+
+    /* ======================================================================
+       SHIFT MANAGEMENT
+       ====================================================================== */
+
+    async function renderShiftsPage() {
+      showLoadingPage('กำลังโหลดข้อมูลกะ');
+      const result = await api('getMyShift');
+      const shift = result.shift || null;
+      state.currentShift = shift;
+      let shifts = [];
+      if (userCan('settlement.read')) {
+        try { const list = await api('listShifts', { limit: 100 }); shifts = list.shifts || []; } catch (error) { shifts = []; }
+      }
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>จัดการกะพนักงาน</h2><p>เปิดกะ ปิดกะ และตรวจสอบยอดประจำกะ</p></div><div class="heading-actions"><button class="btn btn-outline" id="refreshShiftsButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div></div>
+        <div class="grid grid-2">
+          <div class="card card-pad"><div class="row-between"><h3 class="card-title">กะปัจจุบันของฉัน</h3>${shift ? statusBadge(valueOf(shift, 'Status', 'status')) : statusBadge('CLOSED')}</div>
+            ${shift ? `<div class="stack" style="margin-top:16px;"><div><div class="muted small">รหัสกะ</div><strong class="mono">${escapeHtml(valueOf(shift, 'ShiftID', 'shiftId'))}</strong></div><div><div class="muted small">เริ่มกะเมื่อ</div><strong>${formatDate(valueOf(shift, 'OpenedAt', 'openedAt'))}</strong></div><div><div class="muted small">อุปกรณ์</div><strong>${escapeHtml(valueOf(shift, 'DeviceID', 'deviceId') || getDeviceId())}</strong></div></div><button class="btn btn-danger btn-block" id="closeShiftButton" style="margin-top:18px;"><i class="fa-solid fa-lock"></i> ปิดกะทำงาน</button>` : `<div class="empty-state"><i class="fa-regular fa-clock"></i><strong>ยังไม่มีกะที่เปิดใช้งาน</strong><p class="muted small">เปิดกะก่อนเริ่มรับชำระเงิน หากระบบกำหนดให้ต้องเปิดกะ</p></div><button class="btn btn-primary btn-block" id="openShiftButton"><i class="fa-solid fa-play"></i> เปิดกะทำงาน</button>`}
+          </div>
+          <div class="card card-pad"><h3 class="card-title">ข้อควรปฏิบัติ</h3><div class="stack" style="margin-top:15px;gap:12px;"><div class="row"><i class="fa-solid fa-check-circle" style="color:var(--success);"></i><span>เปิดกะก่อนเริ่มรับชำระเงิน</span></div><div class="row"><i class="fa-solid fa-check-circle" style="color:var(--success);"></i><span>ใช้บัญชีพนักงานของตนเอง</span></div><div class="row"><i class="fa-solid fa-check-circle" style="color:var(--success);"></i><span>ปิดกะเมื่อสิ้นสุดการทำงาน</span></div><div class="row"><i class="fa-solid fa-check-circle" style="color:var(--success);"></i><span>ตรวจสอบยอดก่อนปิดกะ</span></div></div></div>
+        </div>
+        ${userCan('settlement.read') ? `<div class="card" style="margin-top:16px;"><div class="card-pad"><h3 class="card-title">ประวัติกะพนักงาน</h3></div>${renderShiftsTable(shifts)}</div>` : ''}`;
+    }
+
+    function renderShiftsTable(rows) {
+      if (!rows.length) return emptyHtml('ไม่พบข้อมูลกะพนักงาน');
+      return `<div class="table-wrap"><table><thead><tr><th>รหัสกะ</th><th>พนักงาน</th><th>อุปกรณ์</th><th>เวลาเปิด</th><th>เวลาปิด</th><th>จำนวนรายการ</th><th>ยอดรับเงิน</th><th>สถานะ</th></tr></thead><tbody>${rows.map(row => `<tr><td class="mono">${escapeHtml(valueOf(row, 'ShiftID', 'shiftId'))}</td><td>${escapeHtml(valueOf(row, 'UserName', 'userName') || '-')}</td><td>${escapeHtml(valueOf(row, 'DeviceID', 'deviceId') || '-')}</td><td>${formatDate(valueOf(row, 'OpenedAt', 'openedAt'))}</td><td>${formatDate(valueOf(row, 'ClosedAt', 'closedAt'))}</td><td>${Number(valueOf(row, 'TransactionCount', 'transactionCount') || 0)}</td><td>${formatMoney(valueOf(row, 'TotalAmount', 'totalAmount'))} ฿</td><td>${statusBadge(valueOf(row, 'Status', 'status'))}</td></tr>`).join('')}</tbody></table></div>`;
+    }
+
+    async function openShift() {
+      try {
+        const result = await api('openShift', { deviceId: getDeviceId(), note: '' });
+        state.currentShift = result.shift || null;
+        toast('เปิดกะทำงานเรียบร้อยแล้ว', 'success');
+        await renderShiftsPage();
+      } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    async function closeShift() {
+      showConfirm('ปิดกะทำงาน', 'ต้องการปิดกะปัจจุบันหรือไม่?', async () => {
+        try {
+          const result = await api('closeShift', { note: '' });
+          state.currentShift = null;
+          const summary = result.summary || {};
+          openModal('ปิดกะเรียบร้อยแล้ว', `<div class="grid grid-2"><div class="card card-pad"><div class="muted small">จำนวนรายการ</div><strong>${Number(summary.transactionCount || 0).toLocaleString('th-TH')}</strong></div><div class="card card-pad"><div class="muted small">รายการสำเร็จ</div><strong>${Number(summary.successCount || 0).toLocaleString('th-TH')}</strong></div><div class="card card-pad"><div class="muted small">ยอดรับเงิน</div><strong>${formatMoney(summary.totalAmount)} บาท</strong></div></div>`, [{ label: 'ตกลง', className: 'btn-primary', onClick: async () => { closeModal(); await renderShiftsPage(); } }]);
+        } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+      }, true);
+    }
+
+    /* ======================================================================
+       REFUND REQUEST AND REVIEW
+       ====================================================================== */
+
+    async function renderRefundsPage() {
+      showLoadingPage('กำลังโหลดคำขอคืนเงิน');
+      const result = await api('listRefunds', { limit: 100 });
+      state.currentRefundRows = result.refunds || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>ยกเลิก / คืนเงิน</h2><p>จัดการคำขอคืนเงินและติดตามสถานะการพิจารณา</p></div><button class="btn btn-outline" id="refreshRefundsButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div>
+        <div class="card"><div class="card-pad"><h3 class="card-title">รายการคำขอคืนเงิน</h3><p class="card-description">การอนุมัติในระบบนี้เป็นการอนุมัติคำขอ ยังไม่ใช่การคืนเงินจริงจากผู้ให้บริการ</p></div>${renderRefundTable(state.currentRefundRows)}</div>`;
+    }
+
+    function renderRefundTable(rows) {
+      if (!rows.length) return emptyHtml('ไม่พบคำขอคืนเงิน');
+      return `<div class="table-wrap"><table><thead><tr><th>รหัสคำขอ</th><th>เลขที่รายการ</th><th>ยอดเงิน</th><th>เหตุผล</th><th>วันที่ขอ</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody>${rows.map(row => {
+        const id = valueOf(row, 'RefundID', 'refundId');
+        const status = valueOf(row, 'Status', 'status');
+        const pendingReview = String(status).toUpperCase() === 'REQUESTED' && userCan('refund.review');
+        return `<tr><td class="mono">${escapeHtml(id)}</td><td class="mono">${escapeHtml(valueOf(row, 'TransactionID', 'transactionId'))}</td><td>${formatMoney(valueOf(row, 'Amount', 'amount'))} ฿</td><td>${escapeHtml(valueOf(row, 'Reason', 'reason'))}</td><td>${formatDate(valueOf(row, 'RequestedAt', 'requestedAt'))}</td><td>${statusBadge(status)}</td><td>${pendingReview ? `<button class="btn btn-success btn-sm" data-action="review-refund" data-id="${escapeHtml(id)}" data-decision="APPROVE">อนุมัติ</button> <button class="btn btn-danger btn-sm" data-action="review-refund" data-id="${escapeHtml(id)}" data-decision="REJECT">ปฏิเสธ</button>` : '<span class="muted small">-</span>'}</td></tr>`;
+      }).join('')}</tbody></table></div>`;
+    }
+
+    function requestRefundForTransaction(transactionId) {
+      openModal('ส่งคำขอคืนเงิน', `<div class="field"><label for="refundReason">เหตุผลในการคืนเงิน</label><textarea id="refundReason" class="textarea" maxlength="500" placeholder="ระบุเหตุผลให้ชัดเจน" required></textarea></div><p class="field-hint">ระบบจะสร้างคำขอเพื่อให้ผู้มีสิทธิ์พิจารณา การคืนเงินจริงต้องดำเนินการผ่านผู้ให้บริการชำระเงินแยกต่างหาก</p>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'ส่งคำขอ', className: 'btn-danger', onClick: async () => {
+          const reason = $('#refundReason').value.trim();
+          if (!reason) return toast('กรุณาระบุเหตุผลในการคืนเงิน', 'warning');
+          try { await api('requestRefund', { transactionId, reason }); closeModal(); toast('ส่งคำขอคืนเงินแล้ว', 'success'); if (state.currentPage === 'refunds') await renderRefundsPage(); }
+          catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+        }}
+      ]);
+    }
+
+    function reviewRefund(refundId, decision) {
+      const label = decision === 'APPROVE' ? 'อนุมัติคำขอ' : 'ปฏิเสธคำขอ';
+      openModal(label, `<div class="field"><label for="refundReviewNote">หมายเหตุการพิจารณา</label><textarea id="refundReviewNote" class="textarea" maxlength="500" placeholder="ระบุหมายเหตุ (ไม่บังคับ)"></textarea></div>${decision === 'APPROVE' ? '<p class="field-hint">การอนุมัติจะเปลี่ยนสถานะเป็นรอดำเนินการกับผู้ให้บริการ ไม่ได้คืนเงินจริงโดยอัตโนมัติ</p>' : ''}`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'ยืนยัน', className: decision === 'APPROVE' ? 'btn-success' : 'btn-danger', onClick: async () => {
+          try { await api('reviewRefund', { refundId, decision, note: $('#refundReviewNote').value.trim() }); closeModal(); toast(decision === 'APPROVE' ? 'อนุมัติคำขอแล้ว' : 'ปฏิเสธคำขอแล้ว', 'success'); await renderRefundsPage(); }
+          catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+        }}
+      ]);
+    }
+
+    /* ======================================================================
+       DEVICE MANAGEMENT
+       ====================================================================== */
+
+    async function renderDevicesPage() {
+      showLoadingPage('กำลังโหลดอุปกรณ์');
+      const result = await api('listDevices');
+      state.currentDeviceRows = result.devices || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>จัดการอุปกรณ์</h2><p>เพิ่มเครื่องรับชำระและควบคุมสถานะการใช้งาน</p></div><button class="btn btn-primary" id="addDeviceButton"><i class="fa-solid fa-plus"></i> เพิ่มอุปกรณ์</button></div>
+        <div class="card"><div class="card-pad"><h3 class="card-title">รายการอุปกรณ์</h3><p class="card-description">รหัสเครื่องจะถูกใช้ผูกกับรายการรับชำระเงิน</p></div>${renderDevicesTable(state.currentDeviceRows)}</div>`;
+    }
+
+    function renderDevicesTable(rows) {
+      if (!rows.length) return emptyHtml('ยังไม่มีข้อมูลอุปกรณ์');
+      return `<div class="table-wrap"><table><thead><tr><th>รหัสอุปกรณ์</th><th>ชื่ออุปกรณ์</th><th>ผู้ใช้งานล่าสุด</th><th>ใช้งานล่าสุด</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody>${rows.map(row => {
+        const id = valueOf(row, 'DeviceID', 'deviceId');
+        const status = valueOf(row, 'Status', 'status');
+        return `<tr><td class="mono">${escapeHtml(id)}</td><td><strong>${escapeHtml(valueOf(row, 'DeviceName', 'deviceName'))}</strong><div class="muted small">${escapeHtml(valueOf(row, 'Notes', 'notes'))}</div></td><td>${escapeHtml(valueOf(row, 'AssignedUserID', 'assignedUserId') || '-')}</td><td>${formatDate(valueOf(row, 'LastSeenAt', 'lastSeenAt'))}</td><td>${statusBadge(status)}</td><td class="nowrap"><button class="btn btn-outline btn-sm" data-action="edit-device" data-id="${escapeHtml(id)}"><i class="fa-solid fa-pen"></i></button> <button class="btn btn-outline btn-sm" data-action="toggle-device-status" data-id="${escapeHtml(id)}" data-status="${escapeHtml(status)}"><i class="fa-solid ${status === 'ACTIVE' ? 'fa-toggle-on' : 'fa-toggle-off'}"></i></button></td></tr>`;
+      }).join('')}</tbody></table></div>`;
+    }
+
+    function showDeviceModal(deviceId = '') {
+      const device = state.currentDeviceRows.find(row => valueOf(row, 'DeviceID', 'deviceId') === deviceId) || {};
+      const id = valueOf(device, 'DeviceID', 'deviceId');
+      openModal(id ? 'แก้ไขอุปกรณ์' : 'เพิ่มอุปกรณ์', `
+        <form id="deviceForm" class="form-grid">
+          <div class="field full"><label for="deviceName">ชื่ออุปกรณ์</label><input id="deviceName" class="input" maxlength="80" required value="${escapeHtml(valueOf(device, 'DeviceName', 'deviceName'))}" placeholder="เช่น EDC-01 เคาน์เตอร์ 1"></div>
+          <div class="field"><label for="deviceStatus">สถานะ</label><select id="deviceStatus" class="select"><option value="ACTIVE" ${valueOf(device, 'Status', 'status') !== 'INACTIVE' ? 'selected' : ''}>ใช้งาน</option><option value="INACTIVE" ${valueOf(device, 'Status', 'status') === 'INACTIVE' ? 'selected' : ''}>ระงับใช้งาน</option></select></div>
+          <div class="field"><label for="deviceAssignedUser">รหัสพนักงานที่กำหนด (ถ้ามี)</label><input id="deviceAssignedUser" class="input" value="${escapeHtml(valueOf(device, 'AssignedUserID', 'assignedUserId'))}"></div>
+          <div class="field full"><label for="deviceNotes">หมายเหตุ</label><input id="deviceNotes" class="input" maxlength="250" value="${escapeHtml(valueOf(device, 'Notes', 'notes'))}"></div>
+          <input type="hidden" id="deviceId" value="${escapeHtml(id)}">
+        </form>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'บันทึก', className: 'btn-primary', onClick: saveDevice }
+      ]);
+    }
+
+    async function saveDevice() {
+      const deviceName = $('#deviceName').value.trim();
+      if (!deviceName) return toast('กรุณาระบุชื่ออุปกรณ์', 'warning');
+      try {
+        await api('saveDevice', {
+          deviceId: $('#deviceId').value,
+          deviceName,
+          status: $('#deviceStatus').value,
+          assignedUserId: $('#deviceAssignedUser').value.trim(),
+          notes: $('#deviceNotes').value.trim()
+        });
+        closeModal(); toast('บันทึกข้อมูลอุปกรณ์แล้ว', 'success'); await renderDevicesPage();
+      } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    async function toggleDeviceStatus(deviceId, currentStatus) {
+      const nextStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+      showConfirm('เปลี่ยนสถานะอุปกรณ์', `ต้องการเปลี่ยนสถานะเป็น ${nextStatus === 'ACTIVE' ? 'ใช้งาน' : 'ระงับใช้งาน'} หรือไม่?`, async () => {
+        try { await api('setDeviceStatus', { deviceId, status: nextStatus }); toast('เปลี่ยนสถานะอุปกรณ์แล้ว', 'success'); await renderDevicesPage(); }
+        catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+      }, nextStatus === 'INACTIVE');
+    }
+
+    /* ======================================================================
+       NOTIFICATIONS
+       ====================================================================== */
+
+    async function refreshNotificationDot() {
+      if (!state.token || !userCan('notifications.read')) return;
+      try {
+        const result = await api('getNotifications', { unreadOnly: true, limit: 1 });
+        state.notificationUnread = (result.notifications || []).length > 0;
+        $('#notificationDot').classList.toggle('hidden', !state.notificationUnread);
+      } catch (error) { /* Notification badge is non-blocking */ }
+    }
+
+    async function renderNotificationsPage() {
+      showLoadingPage('กำลังโหลดการแจ้งเตือน');
+      const result = await api('getNotifications', { unreadOnly: false, limit: 100 });
+      state.currentNotifications = result.notifications || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>การแจ้งเตือน</h2><p>ติดตามสถานะธุรกรรมและกิจกรรมในระบบ</p></div><button class="btn btn-outline" id="refreshNotificationsButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div>
+        <div class="card">${renderNotificationsList(state.currentNotifications)}</div>`;
+    }
+
+    function renderNotificationsList(rows) {
+      if (!rows.length) return emptyHtml('ยังไม่มีการแจ้งเตือน');
+      return `<div class="stack" style="padding:8px 18px;gap:0;">${rows.map(row => {
+        const id = valueOf(row, 'NotificationID', 'notificationId');
+        const read = Boolean(valueOf(row, 'IsRead', 'isRead'));
+        return `<div class="row" style="align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);"><div class="stat-icon ${read ? 'blue' : 'amber'}"><i class="fa-regular fa-bell"></i></div><div style="flex:1;min-width:0;"><div class="row-between"><strong>${escapeHtml(valueOf(row, 'Title', 'title'))}</strong>${read ? statusBadge('READ') : statusBadge('UNREAD')}</div><div class="muted small" style="margin-top:4px;">${escapeHtml(valueOf(row, 'Message', 'message'))}</div><div class="field-hint" style="margin-top:5px;">${formatDate(valueOf(row, 'CreatedAt', 'createdAt'))}</div></div>${!read ? `<button class="btn btn-outline btn-sm" data-action="mark-notification-read" data-id="${escapeHtml(id)}">อ่านแล้ว</button>` : ''}</div>`;
+      }).join('')}</div>`;
+    }
+
+    async function markNotificationRead(notificationId) {
+      try { await api('markNotificationRead', { notificationId }); await renderNotificationsPage(); await refreshNotificationDot(); }
+      catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    /* ======================================================================
+       AUDIT LOGS, SYSTEM LOGS AND API USAGE
+       ====================================================================== */
+
+    async function renderAuditPage() {
+      showLoadingPage('กำลังโหลดบันทึกกิจกรรม');
+      const result = await api('listAuditLogs', { limit: 150 });
+      const rows = result.logs || [];
+      $('#pageContent').innerHTML = `<div class="page-heading"><div><h2>บันทึกกิจกรรม</h2><p>ตรวจสอบประวัติการดำเนินการของผู้ใช้งาน</p></div><button class="btn btn-outline" id="refreshAuditButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div><div class="card"><div class="card-pad"><h3 class="card-title">Audit Log</h3></div>${rows.length ? `<div class="table-wrap"><table><thead><tr><th>วันเวลา</th><th>ผู้ใช้งาน</th><th>บทบาท</th><th>กิจกรรม</th><th>ประเภทข้อมูล</th><th>รหัสอ้างอิง</th></tr></thead><tbody>${rows.map(row => `<tr><td>${formatDate(valueOf(row, 'CreatedAt', 'createdAt'))}</td><td>${escapeHtml(valueOf(row, 'UserName', 'userName'))}</td><td>${escapeHtml(valueOf(row, 'Role', 'role'))}</td><td><strong>${escapeHtml(valueOf(row, 'Action', 'action'))}</strong></td><td>${escapeHtml(valueOf(row, 'EntityType', 'entityType'))}</td><td class="mono">${escapeHtml(valueOf(row, 'EntityID', 'entityId'))}</td></tr>`).join('')}</tbody></table></div>` : emptyHtml('ยังไม่มีบันทึกกิจกรรม')}</div>`;
+    }
+
+    async function renderSystemLogsPage() {
+      showLoadingPage('กำลังโหลดบันทึกระบบ');
+      const result = await api('listSystemLogs', { limit: 150 });
+      const rows = result.logs || [];
+      $('#pageContent').innerHTML = `<div class="page-heading"><div><h2>บันทึกระบบ</h2><p>สำหรับผู้ดูแลระบบ ใช้ตรวจสอบเหตุการณ์ที่เกิดขึ้น</p></div><button class="btn btn-outline" id="refreshSystemLogsButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div><div class="card"><div class="card-pad"><h3 class="card-title">System Logs</h3><p class="card-description">หน้าจอนี้แสดงข้อความสรุป ไม่แสดงรายละเอียดทางเทคนิคภายใน</p></div>${rows.length ? `<div class="table-wrap"><table><thead><tr><th>วันเวลา</th><th>ระดับ</th><th>ข้อความ</th><th>การทำงาน</th></tr></thead><tbody>${rows.map(row => `<tr><td>${formatDate(row.createdAt)}</td><td>${statusBadge(row.level)}</td><td>${escapeHtml(row.publicMessage || 'เกิดข้อผิดพลาดในการดำเนินการ')}</td><td class="mono">${escapeHtml(row.action || '-')}</td></tr>`).join('')}</tbody></table></div>` : emptyHtml('ยังไม่มีบันทึกระบบ')}</div>`;
+    }
+
+    async function renderApiUsagePage() {
+      showLoadingPage('กำลังโหลดประวัติการใช้งาน API');
+      const result = await api('listApiUsage', { limit: 150 });
+      const rows = result.usage || [];
+      $('#pageContent').innerHTML = `<div class="page-heading"><div><h2>การใช้งาน API</h2><p>สถิติการเรียกบริการ Thunder และ ImgBB</p></div><button class="btn btn-outline" id="refreshApiUsageButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button></div><div class="card"><div class="card-pad"><h3 class="card-title">API Usage</h3></div>${rows.length ? `<div class="table-wrap"><table><thead><tr><th>วันเวลา</th><th>ผู้ให้บริการ</th><th>Endpoint</th><th>เลขที่รายการ</th><th>HTTP</th><th>เวลา (ms)</th><th>ผลลัพธ์</th></tr></thead><tbody>${rows.map(row => `<tr><td>${formatDate(valueOf(row, 'CreatedAt', 'createdAt'))}</td><td><strong>${escapeHtml(valueOf(row, 'Provider', 'provider'))}</strong></td><td class="mono">${escapeHtml(valueOf(row, 'Endpoint', 'endpoint'))}</td><td class="mono">${escapeHtml(valueOf(row, 'TransactionID', 'transactionId'))}</td><td>${escapeHtml(valueOf(row, 'HttpStatus', 'httpStatus'))}</td><td>${Number(valueOf(row, 'DurationMs', 'durationMs') || 0)}</td><td>${valueOf(row, 'Success', 'success') ? statusBadge('SUCCESS') : statusBadge('FAILED')}</td></tr>`).join('')}</tbody></table></div>` : emptyHtml('ยังไม่มีข้อมูลการเรียก API')}</div>`;
+    }
+
+    /* ======================================================================
+       ROLE PERMISSIONS
+       ====================================================================== */
+
+    async function renderPermissionsPage() {
+      showLoadingPage('กำลังโหลดสิทธิ์การใช้งาน');
+      const result = await api('listRolePermissions');
+      const rows = result.permissions || [];
+      const permissionLabels = {
+        'payment.create': 'รับชำระเงิน', 'payment.cancel': 'ยกเลิกรายการ', 'transaction.read.all': 'ดูประวัติทั้งหมด',
+        'transaction.read.own': 'ดูประวัติของตนเอง', 'staff.read': 'ดูข้อมูลพนักงาน', 'staff.manage': 'จัดการพนักงาน',
+        'reports.read': 'ดูรายงาน', 'settlement.read': 'จัดการยอดเงิน', 'shift.manage': 'จัดการกะ',
+        'refund.request': 'ส่งคำขอคืนเงิน', 'refund.review': 'อนุมัติคำขอคืนเงิน', 'device.manage': 'จัดการอุปกรณ์',
+        'settings.read': 'ดูการตั้งค่า', 'settings.manage': 'แก้ไขการตั้งค่า', 'audit.read': 'ดูบันทึกกิจกรรม',
+        'systemlogs.read': 'ดูบันทึกระบบ', 'notifications.read': 'ดูการแจ้งเตือน', 'media.upload': 'อัปโหลดรูปภาพ'
+      };
+      const keys = [...new Set(rows.map(row => row.permissionCode))];
+      const roles = ['MANAGER', 'CASHIER'];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>จัดการสิทธิ์การใช้งาน</h2><p>กำหนดสิทธิ์ของ Manager และ Cashier โดย Admin เป็นผู้ควบคุม</p></div><button class="btn btn-primary" id="savePermissionsButton"><i class="fa-solid fa-floppy-disk"></i> บันทึกสิทธิ์</button></div>
+        <div class="card"><div class="card-pad"><div class="row-between"><h3 class="card-title">ตารางสิทธิ์</h3><span class="badge badge-info">Admin กำหนดสิทธิ์ได้</span></div><p class="card-description">สิทธิ์ Admin ถูกเปิดใช้งานตลอดเวลาและไม่สามารถปิดได้</p></div><div class="table-wrap"><table class="permission-table"><thead><tr><th>ฟังก์ชัน</th><th>Manager</th><th>Cashier</th></tr></thead><tbody>${keys.map(key => `<tr><td><strong>${escapeHtml(permissionLabels[key] || key)}</strong><div class="muted small mono">${escapeHtml(key)}</div></td>${roles.map(role => { const row = rows.find(item => item.role === role && item.permissionCode === key); return `<td><label class="switch"><input type="checkbox" data-permission-role="${role}" data-permission-code="${escapeHtml(key)}" ${row && row.isAllowed ? 'checked' : ''}><span>${row && row.isAllowed ? 'อนุญาต' : 'ไม่อนุญาต'}</span></label></td>`; }).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+    }
+
+    async function savePermissions() {
+      const permissions = $$('[data-permission-role]').map(input => ({ role: input.dataset.permissionRole, permissionCode: input.dataset.permissionCode, isAllowed: input.checked }));
+      try { await api('saveRolePermissions', { permissions }); toast('บันทึกสิทธิ์การใช้งานแล้ว', 'success'); await renderPermissionsPage(); }
+      catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    /* ======================================================================
+       MEDIA LIBRARY / IMGBB
+       ====================================================================== */
+
+    async function renderMediaPage() {
+      showLoadingPage('กำลังโหลดคลังรูปภาพ');
+      const result = await api('listMediaFiles', { limit: 150, imageType: '' });
+      state.currentMediaRows = result.media || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>คลังรูปภาพ</h2><p>จัดการรูปภาพที่อัปโหลดผ่าน ImgBB และลิงก์ที่บันทึกใน Google Sheets</p></div><div class="heading-actions"><button class="btn btn-outline" id="refreshMediaButton"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>${userCan('media.upload') ? '<button class="btn btn-primary" id="uploadMediaButton"><i class="fa-solid fa-cloud-arrow-up"></i> อัปโหลดรูปภาพ</button>' : ''}</div></div>
+        <div class="card card-pad" style="margin-bottom:16px;"><div class="row"><div class="stat-icon teal"><i class="fa-solid fa-circle-info"></i></div><div><strong>การจัดเก็บรูปภาพ</strong><div class="muted small">รูปภาพจะถูกส่งไปยัง ImgBB ผ่าน Backend และบันทึก URL ไว้ใน Google Sheets</div></div></div></div>
+        <div class="grid grid-3" id="mediaGrid">${renderMediaGrid(state.currentMediaRows)}</div>`;
+    }
+
+    function renderMediaGrid(rows) {
+      if (!rows.length) return `<div class="card" style="grid-column:1/-1;">${emptyHtml('ยังไม่มีรูปภาพ')}</div>`;
+      return rows.map(row => `
+        <div class="card card-pad">
+          <a href="${escapeHtml(row.imageUrl || '')}" target="_blank" rel="noopener"><img src="${escapeHtml(row.thumbnailUrl || row.imageUrl || '')}" class="media-preview" alt="รูปภาพ" loading="lazy"></a>
+          <div class="row-between" style="margin-top:10px;"><strong>${escapeHtml(row.imageType || 'GENERAL')}</strong>${statusBadge(row.uploadStatus || 'SUCCESS')}</div>
+          <div class="muted small" style="margin-top:5px;">${formatDate(row.uploadedAt)}</div>
+          <div class="mono small" style="overflow-wrap:anywhere;margin-top:6px;">${escapeHtml(row.mediaId)}</div>
+          <div class="heading-actions" style="margin-top:10px;"><button class="btn btn-outline btn-sm" data-copy="${escapeHtml(row.imageUrl || '')}"><i class="fa-regular fa-copy"></i> คัดลอก URL</button><a class="btn btn-outline btn-sm" href="${escapeHtml(row.imageUrl || '')}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดภาพ</a></div>
+        </div>`).join('');
+    }
+
+    function showUploadMediaModal() {
+      openModal('อัปโหลดรูปภาพ', `
+        <div class="stack"><div class="field"><label for="mediaFileInput">เลือกไฟล์รูปภาพ</label><input id="mediaFileInput" type="file" class="input" accept="image/jpeg,image/png,image/webp"></div>
+        <div class="field"><label for="mediaImageType">ประเภทภาพ</label><select id="mediaImageType" class="select"><option value="GENERAL">ทั่วไป</option><option value="BUSINESS_LOGO">โลโก้ร้านค้า</option><option value="DOCUMENT">เอกสารประกอบ</option></select></div>
+        <div class="field"><label for="mediaRelatedId">รหัสอ้างอิง (ไม่บังคับ)</label><input id="mediaRelatedId" class="input" placeholder="เช่น รหัสร้านค้าหรือรายการ"></div>
+        <div id="mediaPreviewWrap" class="hidden"><img id="mediaPreview" style="max-width:100%;max-height:190px;border-radius:10px;border:1px solid var(--line);" alt="ตัวอย่างรูปภาพ"></div>
+        <p class="field-hint">รองรับ JPG, PNG และ WebP ขนาดไม่เกิน 4 MB</p></div>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'อัปโหลด', className: 'btn-primary', icon: 'fa-cloud-arrow-up', onClick: uploadMediaFile }
+      ]);
+      $('#mediaFileInput').addEventListener('change', event => {
+        const file = event.target.files[0];
+        if (!file) return;
+        if (file.size > APP_CONFIG.MAX_IMAGE_BYTES) return toast('ขนาดรูปภาพต้องไม่เกิน 4 MB', 'warning');
+        const reader = new FileReader();
+        reader.onload = () => { $('#mediaPreview').src = reader.result; $('#mediaPreviewWrap').classList.remove('hidden'); };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadMediaFile() {
+      const file = $('#mediaFileInput').files[0];
+      if (!file) return toast('กรุณาเลือกภาพก่อนอัปโหลด', 'warning');
+      if (!/^image\/(jpeg|png|webp)$/i.test(file.type)) return toast('รองรับเฉพาะ JPG, PNG และ WebP', 'warning');
+      if (file.size > APP_CONFIG.MAX_IMAGE_BYTES) return toast('ขนาดรูปภาพต้องไม่เกิน 4 MB', 'warning');
+      try {
+        const dataUrl = await blobToDataUrl(file);
+        await api('uploadImage', {
+          imageBase64: dataUrl,
+          mimeType: file.type,
+          imageType: $('#mediaImageType').value,
+          relatedId: $('#mediaRelatedId').value.trim(),
+          fileName: file.name
+        });
+        closeModal(); toast('อัปโหลดรูปภาพเรียบร้อยแล้ว', 'success'); await renderMediaPage();
+      } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    /* ======================================================================
+       SETTINGS
+       ====================================================================== */
+
+    const SETTING_META = [
+      ['BUSINESS_NAME', 'ชื่อร้านค้า', 'text'],
+      ['BUSINESS_ADDRESS', 'ที่อยู่ร้านค้า', 'text'],
+      ['BUSINESS_PHONE', 'เบอร์โทรศัพท์ร้านค้า', 'text'],
+      ['BUSINESS_LOGO_URL', 'URL โลโก้ร้านค้า', 'url'],
+      ['QR_EXPIRATION_MINUTES', 'เวลา QR หมดอายุ (นาที)', 'number'],
+      ['THUNDER_QR_TYPE', 'ประเภท QR Code', 'select', ['PROMPTPAY', 'KSHOP', 'MAE_MANEE', 'TUNGNGERN']],
+      ['PROMPTPAY_IDENTIFIER_TYPE', 'ประเภท PromptPay', 'select', ['msisdn', 'natId', 'eWalletId', 'billerId']],
+      ['PROMPTPAY_IDENTIFIER', 'หมายเลข PromptPay / Biller ID', 'text'],
+      ['PROMPTPAY_BILLER_REF1', 'Biller Reference 1', 'text'],
+      ['PROMPTPAY_BILLER_REF2', 'Biller Reference 2', 'text'],
+      ['THUNDER_MERCHANT_NAME', 'ชื่อร้านค้าบน QR', 'text'],
+      ['THUNDER_MATCH_ACCOUNT', 'ตรวจสอบบัญชีผู้รับ', 'checkbox'],
+      ['REQUIRE_OPEN_SHIFT', 'บังคับเปิดกะก่อนรับชำระ', 'checkbox'],
+      ['DEFAULT_DEVICE_NAME', 'ชื่ออุปกรณ์เริ่มต้น', 'text'],
+      ['IMG_BB_EXPIRATION_SECONDS', 'อายุรูปภาพ ImgBB (วินาที, 0 = ไม่กำหนด)', 'number'],
+      ['RECEIPT_FOOTER', 'ข้อความท้ายใบเสร็จ', 'text'],
+      ['SOUND_ENABLED', 'เปิดเสียงแจ้งเตือนเมื่อชำระสำเร็จ', 'checkbox'],
+      ['LINE_NOTIFICATION_ENABLED', 'เปิดสถานะการแจ้งเตือน LINE', 'checkbox'],
+      ['ALLOW_CASHIER_VIEW_OWN_HISTORY', 'อนุญาต Cashier ดูประวัติของตนเอง', 'checkbox']
+    ];
+
+    async function renderSettingsPage() {
+      showLoadingPage('กำลังโหลดการตั้งค่า');
+      const [result, status] = await Promise.all([api('getSettings'), api('getDatabaseStatus').catch(() => null)]);
+      const values = {};
+      (result.settings || []).forEach(item => { values[item.key] = item.value; });
+      const databaseFlags = status && status.integrations ? status.integrations : {};
+      const groups = [
+        { title: 'ข้อมูลร้านค้า', keys: ['BUSINESS_NAME', 'BUSINESS_ADDRESS', 'BUSINESS_PHONE', 'BUSINESS_LOGO_URL', 'RECEIPT_FOOTER'] },
+        { title: 'การรับชำระผ่าน Thunder', keys: ['THUNDER_QR_TYPE', 'PROMPTPAY_IDENTIFIER_TYPE', 'PROMPTPAY_IDENTIFIER', 'PROMPTPAY_BILLER_REF1', 'PROMPTPAY_BILLER_REF2', 'THUNDER_MERCHANT_NAME', 'QR_EXPIRATION_MINUTES', 'THUNDER_MATCH_ACCOUNT'] },
+        { title: 'การทำงานและความปลอดภัย', keys: ['REQUIRE_OPEN_SHIFT', 'ALLOW_CASHIER_VIEW_OWN_HISTORY', 'SOUND_ENABLED'] },
+        { title: 'การจัดเก็บรูปภาพ', keys: ['IMG_BB_EXPIRATION_SECONDS'] },
+        { title: 'การแจ้งเตือน', keys: ['LINE_NOTIFICATION_ENABLED'] }
+      ];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>ตั้งค่าระบบ</h2><p>ตั้งค่าร้านค้า การสร้าง QR และเงื่อนไขการรับชำระเงิน</p></div>${userCan('settings.manage') ? '<button class="btn btn-primary" id="saveSettingsButton"><i class="fa-solid fa-floppy-disk"></i> บันทึกการตั้งค่า</button>' : ''}</div>
+        <div class="card card-pad" style="margin-bottom:16px;"><h3 class="card-title">สถานะการเชื่อมต่อบริการ</h3><div class="grid grid-3" style="margin-top:14px;">${integrationCard('Google Sheets', databaseFlags.spreadsheetConfigured)}${integrationCard('Thunder API', databaseFlags.thunderConfigured)}${integrationCard('ImgBB API', databaseFlags.imgbbConfigured)}</div><p class="field-hint" style="margin-top:12px;">สถานะนี้แสดงว่ามีการตั้งค่า Key ใน Backend เท่านั้น ไม่ใช่ผลทดสอบ API แบบเรียลไทม์</p></div>
+        <div class="stack">${groups.map(group => `<section class="card card-pad"><h3 class="card-title">${escapeHtml(group.title)}</h3><div class="form-grid" style="margin-top:14px;">${group.keys.map(key => renderSettingField(key, values[key])).join('')}</div>${group.title === 'การแจ้งเตือน' ? '<p class="field-hint" style="margin-top:12px;">การเปิดตัวเลือกนี้เป็นการบันทึกค่าการตั้งค่าเท่านั้น การส่งข้อความ LINE ยังต้องพัฒนาการเชื่อมต่อเพิ่มเติม</p>' : group.title === 'การรับชำระผ่าน Thunder' ? '<p class="field-hint" style="margin-top:12px;">รายการที่ยังไม่ชำระสำเร็จสามารถส่งตรวจสลิปใหม่ได้ ระบบจะป้องกันการนำสลิปที่ชำระสำเร็จแล้วกลับมาใช้ซ้ำโดยอัตโนมัติ</p>' : ''}</section>`).join('')}</div>`;
+    }
+
+    function integrationCard(label, configured) {
+      return `<div class="card card-pad" style="background:#fbfdfd;"><div class="row-between"><strong>${escapeHtml(label)}</strong>${configured ? '<span class="badge badge-success">ตั้งค่าแล้ว</span>' : '<span class="badge badge-warning">ยังไม่ตั้งค่า</span>'}</div></div>`;
+    }
+
+    function renderSettingField(key, value) {
+      const meta = SETTING_META.find(item => item[0] === key);
+      if (!meta) return '';
+      const [, label, type, options] = meta;
+      if (type === 'checkbox') {
+        const checked = ['true', '1', 'yes'].includes(String(value).toLowerCase());
+        return `<div class="field full"><label class="switch"><input type="checkbox" data-setting-key="${key}" ${checked ? 'checked' : ''}><span>${escapeHtml(label)}</span></label></div>`;
+      }
+      if (type === 'select') {
+        return `<div class="field"><label>${escapeHtml(label)}</label><select class="select" data-setting-key="${key}">${options.map(option => `<option value="${escapeHtml(option)}" ${String(value || options[0]) === option ? 'selected' : ''}>${escapeHtml(option)}</option>`).join('')}</select></div>`;
+      }
+      return `<div class="field"><label>${escapeHtml(label)}</label><input class="input" type="${type}" data-setting-key="${key}" value="${escapeHtml(value || '')}" ${type === 'number' ? 'min="0" step="1"' : ''}></div>`;
+    }
+
+    async function saveSettings() {
+      const settings = $$('[data-setting-key]').map(input => ({
+        key: input.dataset.settingKey,
+        value: input.type === 'checkbox' ? String(input.checked) : input.value
+      }));
+      try {
+        await api('saveSettings', { settings });
+        toast('บันทึกการตั้งค่าเรียบร้อยแล้ว', 'success');
+        const bootstrap = await api('getBootstrap');
+        state.bootstrap = bootstrap; state.settings = bootstrap.settings || {};
+      } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    /* ======================================================================
+       DATABASE / API CONFIGURATION STATUS
+       ====================================================================== */
+
+    async function renderDatabasePage() {
+      showLoadingPage('กำลังตรวจสอบสถานะระบบ');
+      const result = await api('getDatabaseStatus');
+      const flags = result.integrations || {};
+      const databaseRows = result.database || [];
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>สถานะระบบ</h2><p>ตรวจสอบการตั้งค่าฐานข้อมูลและบริการภายนอก</p></div><button class="btn btn-outline" id="refreshDatabaseButton"><i class="fa-solid fa-rotate"></i> ตรวจสอบอีกครั้ง</button></div>
+        <div class="grid grid-3">${integrationCard('Google Sheets', flags.spreadsheetConfigured)}${integrationCard('Thunder API', flags.thunderConfigured)}${integrationCard('ImgBB API', flags.imgbbConfigured)}</div>
+        <div class="card" style="margin-top:16px;"><div class="card-pad"><h3 class="card-title">โครงสร้างฐานข้อมูล</h3><p class="card-description">Backend Version: ${escapeHtml(result.backendVersion || '-')}</p></div>${databaseRows.length ? `<div class="table-wrap"><table><thead><tr><th>ชื่อชีต</th><th>สถานะ</th><th>จำนวนแถวข้อมูล</th><th>จำนวนคอลัมน์</th></tr></thead><tbody>${databaseRows.map(row => `<tr><td class="mono">${escapeHtml(valueOf(row, 'sheet', 'Sheet'))}</td><td>${valueOf(row, 'exists', 'Exists') ? statusBadge('ACTIVE') : statusBadge('INACTIVE')}</td><td>${Number(valueOf(row, 'rows', 'Rows') || 0)}</td><td>${Number(valueOf(row, 'columns', 'Columns') || 0)}</td></tr>`).join('')}</tbody></table></div>` : emptyHtml('ไม่มีข้อมูลสถานะฐานข้อมูล')}</div>`;
+    }
+
+    /* ======================================================================
+       CHANGE OWN ACCESS CODE
+       ====================================================================== */
+
+    function showChangeCodeModal() {
+      openModal('เปลี่ยนรหัสเข้าใช้งาน', `
+        <form id="changeCodeForm" class="stack">
+          <div class="field"><label for="oldAccessCode">รหัสปัจจุบัน</label><input id="oldAccessCode" class="input" type="password" autocomplete="current-password" required></div>
+          <div class="field"><label for="newAccessCode">รหัสใหม่</label><input id="newAccessCode" class="input" type="password" autocomplete="new-password" minlength="8" required></div>
+          <div class="field"><label for="confirmAccessCode">ยืนยันรหัสใหม่</label><input id="confirmAccessCode" class="input" type="password" autocomplete="new-password" minlength="8" required></div>
+          <p class="field-hint">เมื่อเปลี่ยนรหัสสำเร็จ ระบบจะออกจากระบบเพื่อให้เข้าสู่ระบบด้วยรหัสใหม่</p>
+        </form>`, [
+        { label: 'ยกเลิก', className: 'btn-outline', onClick: closeModal },
+        { label: 'เปลี่ยนรหัส', className: 'btn-primary', onClick: changeOwnAccessCode }
+      ]);
+    }
+
+    async function changeOwnAccessCode() {
+      const oldAccessCode = $('#oldAccessCode').value;
+      const newAccessCode = $('#newAccessCode').value;
+      const confirmAccessCode = $('#confirmAccessCode').value;
+      if (newAccessCode.length < 8) return toast('รหัสใหม่ต้องมีอย่างน้อย 8 ตัวอักษร', 'warning');
+      if (newAccessCode !== confirmAccessCode) return toast('รหัสใหม่และการยืนยันไม่ตรงกัน', 'warning');
+      try {
+        await api('changeOwnAccessCode', { oldAccessCode, newAccessCode });
+        closeModal(); await forceLogout('เปลี่ยนรหัสเรียบร้อยแล้ว กรุณาเข้าสู่ระบบด้วยรหัสใหม่');
+      } catch (error) { toast(friendlyError(error.message, error.code), 'error'); }
+    }
+
+    /* ======================================================================
+       MORE MENU AND SHARED INTERACTION HANDLERS
+       ====================================================================== */
+
+    function renderMoreMenuPage() {
+      state.currentPage = 'more';
+      renderNavigation();
+      $('#topbarTitle').textContent = 'เมนูเพิ่มเติม';
+      $('#topbarSubtitle').textContent = 'เครื่องมือบริหารจัดการระบบ';
+      const items = NAV_ITEMS.filter(item => item.group === 'more' && ((!item.permission || userCan(item.permission)) && (!item.role || state.user.role === item.role)));
+      $('#pageContent').innerHTML = `
+        <div class="page-heading"><div><h2>เมนูเพิ่มเติม</h2><p>เลือกฟังก์ชันที่ต้องการใช้งาน</p></div></div>
+        <div class="grid grid-3">${items.map(item => `<button class="card more-menu-card" type="button" data-page="${item.id}"><span class="stat-icon teal"><i class="fa-solid ${item.icon}"></i></span><strong>${escapeHtml(item.label)}</strong><span class="muted small">เปิด${escapeHtml(item.label)}</span></button>`).join('')}</div>`;
+    }
+
+    async function copyText(value) {
+      const text = String(value || '');
+      if (!text) return toast('ไม่มีข้อมูลให้คัดลอก', 'warning');
+      try {
+        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+        else {
+          const area = document.createElement('textarea');
+          area.value = text; area.style.position = 'fixed'; area.style.opacity = '0';
+          document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove();
+        }
+        toast('คัดลอกข้อมูลแล้ว', 'success');
+      } catch (error) { toast('ไม่สามารถคัดลอกข้อมูลได้', 'error'); }
+    }
+
+    function handleDataAction(element) {
+      const action = element.dataset.action;
+      const id = element.dataset.id || '';
+      switch (action) {
+        case 'transaction-detail': showTransactionDetail(id); break;
+        case 'edit-staff': showEditStaffModal(id); break;
+        case 'reset-staff-code': resetStaffCode(id); break;
+        case 'toggle-staff-status': toggleStaffStatus(id, element.dataset.status); break;
+        case 'edit-device': showDeviceModal(id); break;
+        case 'toggle-device-status': toggleDeviceStatus(id, element.dataset.status); break;
+        case 'mark-notification-read': markNotificationRead(id); break;
+        case 'review-refund': reviewRefund(id, element.dataset.decision); break;
+        case 'reload-page': loadPage(state.currentPage); break;
+        default: break;
+      }
+    }
+
+    function bindStaticEvents() {
+      $('#loginForm').addEventListener('submit', handleLogin);
+      $('#toggleLoginCode').addEventListener('click', () => {
+        const field = $('#accessCode');
+        field.type = field.type === 'password' ? 'text' : 'password';
+        $('#toggleLoginCode').innerHTML = field.type === 'password' ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
+      });
+      $('#configureApiButton').addEventListener('click', showApiConfig);
+      $('#sidebarLogout').addEventListener('click', logout);
+      $('#topLogout').addEventListener('click', logout);
+      $('#changeCodeButton').addEventListener('click', showChangeCodeModal);
+      $('#notificationsButton').addEventListener('click', () => navigate('notifications'));
+      $('#modalClose').addEventListener('click', closeModal);
+      $('#modalBackdrop').addEventListener('click', event => { if (event.target === $('#modalBackdrop')) closeModal(); });
+      $('#cameraClose').addEventListener('click', stopCamera);
+      $('#cameraCancel').addEventListener('click', stopCamera);
+      $('#cameraBackdrop').addEventListener('click', event => { if (event.target === $('#cameraBackdrop')) stopCamera(); });
+      $('#captureSlipButton').addEventListener('click', captureCameraImage);
+      $('#cameraFileInput').addEventListener('change', event => fileToBlob(event.target.files[0]));
+
+      document.addEventListener('click', async event => {
+        const pageButton = event.target.closest('[data-page]');
+        if (pageButton) {
+          const pageId = pageButton.dataset.page;
+          if (pageId === 'more') {
+            if (state.currentTransaction && state.currentTransaction.status === 'PENDING' && state.currentPage !== 'payment') {
+              showConfirm('มีรายการรอชำระเงิน', 'ต้องการเปิดเมนูเพิ่มเติมหรือไม่? รายการ QR ปัจจุบันจะยังคงรอชำระอยู่', renderMoreMenuPage);
+            } else if (state.currentTransaction && state.currentTransaction.status === 'PENDING' && state.currentPage === 'payment') {
+              showConfirm('มีรายการรอชำระเงิน', 'ต้องการออกจากหน้ารับชำระหรือไม่? รายการ QR ปัจจุบันจะยังคงรอชำระอยู่', renderMoreMenuPage);
+            } else renderMoreMenuPage();
+          } else navigate(pageId);
+          return;
+        }
+        const copyButton = event.target.closest('[data-copy]');
+        if (copyButton) { copyText(copyButton.dataset.copy); return; }
+        const modalAction = event.target.closest('[data-modal-action]');
+        if (modalAction) {
+          const callback = state.modalActions[modalAction.dataset.modalAction];
+          if (typeof callback === 'function') await callback();
+          return;
+        }
+        const dataAction = event.target.closest('[data-action]');
+        if (dataAction) { handleDataAction(dataAction); return; }
+        const amountButton = event.target.closest('[data-amount]');
+        if (amountButton) {
+          paymentAmountDigits = String(Number(amountButton.dataset.amount));
+          updatePaymentAmount();
+          return;
+        }
+        const keyButton = event.target.closest('[data-key]');
+        if (keyButton) { handlePaymentKey(keyButton.dataset.key); return; }
+
+        const idActions = {
+          openCameraButton: openCamera,
+          cancelCurrentPaymentButton: cancelCurrentPayment,
+          filterTransactionsButton: filterTransactions,
+          refreshTransactionsButton: renderTransactionsPage,
+          exportTransactionsButton: exportTransactionsCsv,
+          addStaffButton: showCreateStaffModal,
+          filterStaffButton: filterStaff,
+          refreshReportButton: renderReportsPage,
+          applyReportFilter: applyReportFilter,
+          exportReportButton: exportReportCsv,
+          refreshSettlementButton: renderSettlementPage,
+          closeBusinessDayButton: closeBusinessDay,
+          refreshShiftsButton: renderShiftsPage,
+          openShiftButton: openShift,
+          closeShiftButton: closeShift,
+          refreshRefundsButton: renderRefundsPage,
+          addDeviceButton: () => showDeviceModal(''),
+          refreshNotificationsButton: renderNotificationsPage,
+          refreshAuditButton: renderAuditPage,
+          refreshSystemLogsButton: renderSystemLogsPage,
+          refreshApiUsageButton: renderApiUsagePage,
+          savePermissionsButton: savePermissions,
+          uploadMediaButton: showUploadMediaModal,
+          refreshMediaButton: renderMediaPage,
+          saveSettingsButton: saveSettings,
+          refreshDatabaseButton: renderDatabasePage
+        };
+        const button = event.target.closest('button[id]');
+        if (button && idActions[button.id]) await idActions[button.id]();
+      });
+
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          if ($('#cameraBackdrop').classList.contains('show')) stopCamera();
+          else if ($('#modalBackdrop').classList.contains('show')) closeModal();
+        }
+        const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement && document.activeElement.tagName);
+        if (!isInput && state.currentPage === 'payment' && !state.currentTransaction && /^\d$/.test(event.key)) handlePaymentKey(event.key);
+        if (!isInput && state.currentPage === 'payment' && !state.currentTransaction && event.key === 'Backspace') handlePaymentKey('back');
+        if (!isInput && state.currentPage === 'payment' && !state.currentTransaction && event.key === 'Enter') createQrPayment();
+      });
+    }
+
+    function initializeApp() {
+      bindStaticEvents();
+      if (!getApiUrl()) {
+        $('#loginScreen').classList.remove('hidden');
+        return;
+      }
+      restoreSession();
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+  </script>
+  <style>
+    /* Additional styles for page-specific UI components. */
+    .terminal-screen{background:linear-gradient(145deg,#1c3d4a,#0e2732);border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:22px 18px;text-align:center;margin-bottom:14px;}
+    .terminal-label{color:#b8cbd1;font-size:11px;}
+    .terminal-amount-row{display:flex;align-items:center;justify-content:center;gap:10px;}
+    .terminal-amount{font-size:38px;font-weight:700;line-height:1.3;letter-spacing:.02em;margin:8px 0;color:#fff;}
+    .amount-delete{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#dbe9ec;border-radius:9px;width:36px;height:34px;}
+    .amount-delete:hover{background:rgba(255,255,255,.15);}
+    .key.enter{display:flex;align-items:center;justify-content:center;gap:7px;}
+    .key.utility{color:#d2e4e7;background:rgba(255,255,255,.04);font-size:14px;}
+    .terminal-amount small{font-size:12px;color:#bbd1d5;margin-left:5px;}
+    .terminal-hint{font-size:10px;color:#9fb6bd;}
+    .qr-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);gap:16px;align-items:start;}
+    .qr-card{padding:24px;text-align:center;}
+    .qr-amount-label{color:var(--muted);font-size:12px;}
+    .qr-amount{font-size:32px;font-weight:700;color:var(--ink);margin:4px 0 18px;}
+    .qr-amount small{font-size:13px;color:var(--muted);font-weight:500;}
+    .qr-image-wrap{display:flex;justify-content:center;margin:0 auto 14px;}
+    .qr-image{width:240px;height:240px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;}
+    .qr-image img{width:100%;height:100%;object-fit:contain;}
+    .qr-image canvas{max-width:100%;max-height:100%;}
+    .qr-expiry{display:flex;justify-content:center;gap:7px;align-items:center;color:var(--warning);font-size:12px;margin:12px 0 6px;}
+    .qr-transaction,.qr-scan-hint{font-size:11px;color:var(--muted);margin:6px 0;}
+    .qr-security-note{font-size:10px;color:var(--muted);margin-top:14px;}
+    .qr-security-note i{color:var(--success);margin-right:4px;}
+    .receipt-details{max-width:460px;margin:0 auto;text-align:left;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;}
+    .receipt-details>div{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:11px;}
+    .receipt-details span{color:var(--muted);}
+    .chart-bar-track{height:110px;width:100%;display:flex;align-items:end;justify-content:center;background:#f1f6f5;border-radius:7px 7px 0 0;overflow:hidden;}
+    .chart-bar-fill{width:70%;background:linear-gradient(180deg,#36a79a,#0f766e);border-radius:6px 6px 0 0;min-height:2px;}
+    .chart-bar-item{flex:1;min-width:0;text-align:center;}
+    .chart-bar-value{font-size:9px;color:var(--muted);height:18px;white-space:nowrap;overflow:hidden;}
+    .chart-bar-label{font-size:9px;color:var(--muted);margin-top:5px;}
+    .media-preview{width:100%;height:170px;object-fit:cover;border:1px solid var(--line);border-radius:10px;background:#f5f7f8;}
+    .more-menu-card{padding:18px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:10px;cursor:pointer;color:var(--ink);}
+    .more-menu-card:hover{border-color:#a8d0c9;box-shadow:var(--shadow);transform:translateY(-1px);}
+    @media(max-width:900px){.qr-layout{grid-template-columns:1fr}.qr-layout .payment-side-card{display:none;}}
+    @media(max-width:760px){.qr-card{padding:17px}.qr-image{width:220px;height:220px}.qr-amount{font-size:28px}.receipt-details>div{font-size:10px}}
+  </style>
+</body>
+</html>
